@@ -1,13 +1,12 @@
 import express  from "express"
 import route from "./routes/user.routes.js"
-import DB from "./config/db.js"
 import dotenv from "dotenv"
+import bodyParser from "body-parser"
 dotenv.config()
 
 const port = 3000
 const app = express()
-DB()
-
+app.use(bodyParser.json())
 
 app.use("/api/v1", route)
 app.listen(port,()=>{

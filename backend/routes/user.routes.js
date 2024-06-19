@@ -1,8 +1,7 @@
 import express from 'express';
+import { signup } from '../controller/user.controller.js';
 const route =express.Router()
 
-route.get('/',(req,res)=>{
-    res.send('hello world')
-})
+route.post("/signup",signup)
 
 export default route
