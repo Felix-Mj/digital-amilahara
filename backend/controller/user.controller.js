@@ -1,28 +1,31 @@
-import { getConnectionAsync } from "../config/db.js";
-import util from "util";
-import bcript from 'bcrypt'
+import bcript from "bcrypt";
+import { User } from "../Models/user.models.js";
 
 const signup = async (req, res) => {
   try {
-    const { name, email, password } = req.body;
-    const Password = await bcript.hash(password, 10)
-    if (!name) return res.status(400).json({ error: "Name is required." });
-    const con = await getConnectionAsync();
-    const createTeamQuery =
-      "INSERT INTO user(name,email,password) VALUES (?,?,?)";
-    const insertTeam = await util.promisify(con.query).bind(con)(createTeamQuery,[name, email, Password]);
-    if (!insertTeam) {
-      con.release();
-      return res.status(401).json({ error: "Signup faild" });
+    const { name, email, password } = req.body;    
+    if (!name) {
+      return res.status(400).json({ success: false, message: "Required Name" });
     }
-    con.release();
-    return res.status(200).json("Signup successfully",);
-  } catch (err) {
-    res.status(500).json({ err: err });
+    if (!email) {
+      return res.status(400).json({ success: false, message: "Required Email" });
+    }
+    if (!password) {
+      return res.status(400).json({ success: false, message: "Required Password" });
+    }
+    const hash = await bcript.hash(password, 10);
+    const user = new User({ name, email, password: hash });
+    await user.save();
+    res.status(201).json({ success: true, message: "User created successfully", user: user });
+  } catch (error) {
+    console.log(error)
+    res.status(500).json({ success: false, message: "Internal server problem",error });
   }
 };
 
 
+const login = async (req, res) => {
+  const { email, password } = req.body;
+};
 
-
-export { signup };
+export { signup, login };

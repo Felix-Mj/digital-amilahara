@@ -1,17 +1,14 @@
-import mysql from "mysql";
-import util from "util";
-import dotenv  from "dotenv";
-dotenv.config();
+import mongoose from "mongoose";
 
-const pool = mysql.createPool({
-  host: process.env.DB_HOST,
-  user: process.env.DB_USER,
-  password: process.env.DB_PASS,
-  database: process.env.DB_NAME,
-  port: process.env.DB_PORT,
-  // debug: true,
-});
+const connectDB = async () =>{
+  const DB = await mongoose.connect(process.env.MOGODB_URL)
+  if (DB) {
+    console.log("DB is connceted")
+  }else{
 
-const getConnectionAsync = util.promisify(pool.getConnection).bind(pool);
+    console.log("DB is nod connected")
+  }
 
-export { getConnectionAsync };
+}
+
+export default connectDB;
