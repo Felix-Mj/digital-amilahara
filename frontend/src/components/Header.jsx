@@ -4,6 +4,7 @@ import { Sheet, SheetContent, SheetTrigger } from "./ui/sheet";
 import { Button } from "./ui/button";
 import { Link } from "react-router-dom";
 import { Avatar, AvatarFallback, AvatarImage } from "./ui/avatar";
+import Account from "@/Pages/Account";
 
 export default function Header() {
   return (
@@ -17,7 +18,8 @@ export default function Header() {
           className="hover:underline hover:underline-offset-4"
           prefetch={false}
         >
-          Signup / Login
+         <Account />
+
         </Link>
         <Avatar>
           <AvatarImage src="https://i.pravatar.cc/150?u=a04258a2462d826712d" alt="@shadcn" />
