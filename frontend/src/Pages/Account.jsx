@@ -11,8 +11,7 @@ import { useDispatch } from "react-redux";
 
 export default function Account() {
   const [formData, setFormData] = useState({});
-  const [signup, setSignup] = useState([]);
-  const [isDialogOpen, setIsDialogOpen] = useState(true);
+  const [isDialogOpen, setIsDialogOpen] = useState(false);
   const dispatch = useDispatch();
 
   const handleChange = (e) => {
@@ -53,7 +52,7 @@ export default function Account() {
   return (
     <Dialog open={isDialogOpen} onOpenChange={setIsDialogOpen}>
       <DialogTrigger asChild>
-        <Button variant="ghost" onClick={() => setIsDialogOpen(true)}>Signup</Button>
+        <Button onClick={() => setIsDialogOpen(true)}>Signup or Login</Button>
       </DialogTrigger>
       <DialogContent className="sm:max-w-[430px] mt-5 flex items-center justify-center flex-col">
         <Tabs defaultValue="account" className="w-[400px]">
