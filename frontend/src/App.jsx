@@ -7,6 +7,10 @@ import { persistor, store } from "./Redux/store";
 import { PersistGate } from "redux-persist/integration/react";
 import { Profile } from "./Pages/Profile";
 import PrivateRoute from "./Pages/PrivateRoute";
+import News from "./Pages/News";
+import Vlogs from "./Pages/Vlogs";
+import Gallerys from "./Pages/Gallerys";
+
 
 export default function App() {
   return (
@@ -19,6 +23,9 @@ export default function App() {
             <Route element={<PrivateRoute />}>
               <Route path="/Profile" element={<Profile />} />
             </Route>
+            <Route path="/News" element={<News />} />
+            <Route path="/Vlogs" element={<Vlogs />}/>
+            <Route path="/Gallerys" element={<Gallerys />}/>
           </Routes>
         </BrowserRouter>
       </PersistGate>

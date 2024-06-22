@@ -8,7 +8,7 @@ export const Profile = () => {
       {/* <h1>{currentUser.name}</h1>
       <h1>{currentUser.email}</h1> */}
 
-      <div className=" w-full ">
+      <div className=" w-full mt-4 ">
         {/* <!-- HTML structure for user profile card --> */}
         <div class="max-w-lg mx-auto bg-white shadow-lg rounded-lg overflow-hidden  ">
           <div class="px-6 py-8 flex justify-center flex-col items-center">
@@ -51,16 +51,16 @@ export const Profile = () => {
                 <tr>
                   <td class="border border-gray-300 px-4 py-2">2024-06-21</td>
                   <td class="border border-gray-300 px-4 py-2">
-                    Payment for groceries
+                    Payment for Donatio
                   </td>
-                  <td class="border border-gray-300 px-4 py-2">$45.00</td>
+                  <td class="border border-gray-300 px-4 py-2">5000k</td>
                 </tr>
                 <tr class="bg-gray-100">
                   <td class="border border-gray-300 px-4 py-2">2024-06-20</td>
                   <td class="border border-gray-300 px-4 py-2">
                     Monthly subscription
                   </td>
-                  <td class="border border-gray-300 px-4 py-2">$29.99</td>
+                  <td class="border border-gray-300 px-4 py-2">1000k</td>
                 </tr>
                 {/* <!-- Add more rows as needed --> */}
               </tbody>
