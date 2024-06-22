@@ -56,4 +56,17 @@ const login = async (req, res) => {
 
 };
 
-export { signup, login };
+const userUpdate = async(req, res)=>{
+  const id = req.params.id;
+  const { name, email, password ,number } = req.body;
+  try {
+    const hash = await bcript.hash(password, 10)
+    const data = await User.findByIdAndUpdate(id, {name,email,password:hash,number})
+    res.status(201).json({ success: true, message: "User updated successfully", data: data });
+  } catch (error) {
+    res.status(500).json({ success: false, message: "Internal server problem",error:error });
+  }
+}
+
+
+export { signup, login, userUpdate };
