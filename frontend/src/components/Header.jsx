@@ -8,56 +8,123 @@ import Account from "@/Pages/Account";
 import { useSelector } from "react-redux";
 
 export default function Header() {
-  const { LogIn } = useSelector((state) => state.user);
+  const { LogIn, currentUser } = useSelector((state) => state.user);
   return (
-    <header className="flex h-16 w-full items-center justify-between px-4 md:px-6 static border-solid shadow-xl border-red-600 ">
-      <Link to={"/"} className="flex items-center gap-2" prefetch={false}>
-        <span className="text-2xl font-semibold">Digital-Amilehra</span>
-      </Link>
-      {/* destop-menu-start */}
-      <div>
-        <div class="hidden lg:flex lg:items-center lg:w-auto" id="nav-content">
-          <ul class="list-reset lg:flex justify-end items-center gap-8 text-xl font-semibold">
-            <li class="mr-3">
-              <a href="#" class="text-black hover:text-blue-600">
-                Home
-              </a>
-            </li>
-            <li class="mr-3">
-              <a href="#" class="text-black hover:text-blue-600">
-                About
-              </a>
-            </li>
-            <li class="mr-3">
-              <a href="#" class="text-black hover:text-blue-600">
-                Services
-              </a>
-            </li>
-            <li className="mr-3">
-              <a href="#" class="text-black hover:text-blue-600">
-                Contact
-              </a>
-            </li>
-            <li className="mr-3">
-              <a href="#" class="text-black hover:text-blue-600">
-                News
-              </a>
-            </li>
-            <li className="mr-3">
-              <a href="#" class="text-black hover:text-blue-600">
-                Gallery
-              </a>
-            </li>
-            <li className="mr-3">
-              <a href="#" class="text-black hover:text-blue-600">
-                Vlog
-              </a>
-            </li>
-          </ul>
-        </div>
+    <header className="flex h-16 w-full items-center justify-between px-4 md:px-6">
+      <Sheet>
+        <SheetTrigger asChild>
+          <Button variant="outline" size="icon" className="lg:hidden">
+            <MenuIcon className="h-6 w-6" />
+            <span className="sr-only">Toggle navigation menu</span>
+          </Button>
+        </SheetTrigger>
+        <SheetContent side="left">
+          <Link to={"/"} className="flex items-center gap-2" prefetch={false}>
+            <span className="text-lg font-semibold">Digital-Amilehra</span>
+          </Link>
+          <nav className="mt-6 grid gap-4">
+            <Link
+              to="/"
+              className="flex items-center gap-2 font-medium"
+              prefetch={false}
+            >
+              Home
+            </Link>
+            <Link
+              to="/about"
+              className="flex items-center gap-2 font-medium"
+              prefetch={false}
+            >
+              About
+            </Link>
+            <Link
+              to="/contact"
+              className="flex items-center gap-2 font-medium"
+              prefetch={false}
+            >
+              Contact
+            </Link>
+            <Link
+              to="/news"
+              className="flex items-center gap-2 font-medium"
+              prefetch={false}
+            >
+              News
+            </Link>
+            <Link
+              to="/blogs"
+              className="flex items-center gap-2 font-medium"
+              prefetch={false}
+            >
+              Blogs
+            </Link>
+            <Link
+              to="/gallery"
+              className="flex items-center gap-2 font-medium"
+              prefetch={false}
+            >
+              Gallery
+            </Link>
+          </nav>
+        </SheetContent>
+      </Sheet>
+      <div className="hidden lg:flex items-center gap-6">
+        <Link
+          to={"/"}
+          className="flex items-center gap-2 text-lg font-semibold"
+          prefetch={false}
+        >
+          <span>Digital-Amilehra</span>
+        </Link>
       </div>
-      {/* destop-menu-end */}
-      <nav className="hidden items-center gap-6 text-sm font-medium md:flex">
+
+      <div className="hidden lg:block ">
+        <nav className="flex items-center gap-6">
+          <Link
+            to="/"
+            className="flex items-center gap-2 font-medium"
+            prefetch={false}
+          >
+            Home
+          </Link>
+          <Link
+            to="/about"
+            className="flex items-center gap-2 font-medium"
+            prefetch={false}
+          >
+            About
+          </Link>
+          <Link
+            to="/contact"
+            className="flex items-center gap-2 font-medium"
+            prefetch={false}
+          >
+            Contact
+          </Link>
+          <Link
+            to="/news"
+            className="flex items-center gap-2 font-medium"
+            prefetch={false}
+          >
+            News
+          </Link>
+          <Link
+            to="/blogs"
+            className="flex items-center gap-2 font-medium"
+            prefetch={false}
+          >
+            Blogs
+          </Link>
+          <Link
+            to="/gallery"
+            className="flex items-center gap-2 font-medium"
+            prefetch={false}
+          >
+            Gallery
+          </Link>
+        </nav>
+      </div>
+      <div>
         {LogIn === false ? (
           <Link
             href="#"
@@ -70,63 +137,14 @@ export default function Header() {
           <Link to={"/profile"}>
             <Avatar>
               <AvatarImage
-                src="https://i.pravatar.cc/150?u=a04258a2462d826712d"
+                src={currentUser.avator}
                 alt="@shadcn"
               />
               <AvatarFallback>CN</AvatarFallback>
             </Avatar>
           </Link>
         )}
-      </nav>
-      <Sheet>
-        <SheetTrigger asChild>
-          <Button variant="outline" size="icon" className="md:hidden">
-            <MenuIcon className="h-6 w-6" />
-            <span className="sr-only">Toggle navigation menu</span>
-          </Button>
-        </SheetTrigger>
-        <SheetContent side="right">
-          <div className="grid gap-4 p-4">
-            <Link
-              href="#"
-              className="flex items-center gap-2 font-medium"
-              prefetch={false}
-            >
-              <span>Digtal-Amilehra</span>
-            </Link>
-            <nav className="grid gap-2">
-              <Link
-                href="#"
-                className="flex items-center gap-2 font-medium"
-                prefetch={false}
-              >
-                Home
-              </Link>
-              <Link
-                href="#"
-                className="flex items-center gap-2 font-medium"
-                prefetch={false}
-              >
-                About
-              </Link>
-              <Link
-                href="#"
-                className="flex items-center gap-2 font-medium"
-                prefetch={false}
-              >
-                Services
-              </Link>
-              <Link
-                href="#"
-                className="flex items-center gap-2 font-medium"
-                prefetch={false}
-              >
-                Contact
-              </Link>
-            </nav>
-          </div>
-        </SheetContent>
-      </Sheet>
+      </div>
     </header>
   );
 }

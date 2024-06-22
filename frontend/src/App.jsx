@@ -10,6 +10,8 @@ import PrivateRoute from "./Pages/PrivateRoute";
 import News from "./Pages/News";
 import Vlogs from "./Pages/Vlogs";
 import Gallerys from "./Pages/Gallerys";
+import About from "./Pages/About";
+import Contact from "./Pages/Contact";
 
 
 export default function App() {
@@ -23,9 +25,11 @@ export default function App() {
             <Route element={<PrivateRoute />}>
               <Route path="/Profile" element={<Profile />} />
             </Route>
-            <Route path="/News" element={<News />} />
-            <Route path="/Vlogs" element={<Vlogs />}/>
-            <Route path="/Gallerys" element={<Gallerys />}/>
+            <Route path="/news" element={<News />} />
+            <Route path="/blogs" element={<Vlogs />}/>
+            <Route path="/gallerys" element={<Gallerys />}/>
+            <Route path="/about" element={<About />}/>
+            <Route path="/contact" element={<Contact />}/>
           </Routes>
         </BrowserRouter>
       </PersistGate>
