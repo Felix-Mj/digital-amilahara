@@ -1,4 +1,4 @@
-import bcript from "bcrypt";
+import bcript, { hash } from "bcrypt";
 import { User } from "../Models/user.models.js";
 import { genToken } from "../middleware/jwt.js";
 
@@ -58,14 +58,28 @@ const login = async (req, res) => {
 
 const userUpdate = async(req, res)=>{
   const id = req.params.id;
-  const { name, email, password ,number } = req.body;
   try {
-    const hash = await bcript.hash(password, 10)
-    const data = await User.findByIdAndUpdate(id, {name,email,password:hash,number})
-    res.status(201).json({ success: true, message: "User updated successfully", data: data });
+    if (req.body.password) {
+      req.body.password = await bcript.hash(req.body.password, 10);
+    }
+    const updatedUser = await User.findByIdAndUpdate(id,
+      {
+        $set: {
+          name: req.body.name,
+          email: req.body.email,
+          password: req.body.password,
+          avatar: req.body.avatar,
+        },
+      },
+      { new: true }
+    );
+    const { password, ...rest } = updatedUser._doc;
+    res
+      .status(200)
+      .json({ success: true, message: "User updated", data: rest });
   } catch (error) {
-    res.status(500).json({ success: false, message: "Internal server problem",error:error });
-  }
+    res.status(500).json({ success: false, message: "Internal server issue" });
+}
 }
 
 
