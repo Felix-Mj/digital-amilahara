@@ -1,15 +1,12 @@
 import React from "react";
 import { useSelector } from "react-redux";
+import ProfileUpdate from "./compo/ProfileUpdate";
 
 export const Profile = () => {
   const { currentUser } = useSelector((state) => state.user);
   return (
     <>
-      {/* <h1>{currentUser.name}</h1>
-      <h1>{currentUser.email}</h1> */}
-
       <div className=" w-full mt-4 ">
-        {/* <!-- HTML structure for user profile card --> */}
         <div class="max-w-lg mx-auto bg-white shadow-lg rounded-lg overflow-hidden  ">
           <div class="px-6 py-8 flex justify-center flex-col items-center">
             <img
@@ -21,16 +18,10 @@ export const Profile = () => {
                 {currentUser.email}
               </p>
               <div class="mt-4 flex items-center flex-col gap-4 w-full ">
-                <button class="bg-green-500 hover:bg-blue-700 w-full text-white text-sm  font-normal py-2 px-4 rounded">
-                  Update Profile
-                </button>
+                <ProfileUpdate/>
                 <button class="bg-blue-500 hover:bg-red-600 w-full text-white text-sm font-normal py-2 px-4 rounded">
                   LogOut
                 </button>
-                {/* <button class="bg-red-600 hover:bg-red-700 text-white text-sm font-normal py-2 px-4 rounded">
-                  Delete Account
-                </button> */}
-                
               </div>
             </div>
           </div>
@@ -68,33 +59,6 @@ export const Profile = () => {
           </div>
         </div>
       </div>
-
-      {/* <div>
-        <div>
-          <div className="flex flex-col items-center justify-center h-screen bg-gray-100 dark:bg-gray-900">
-            <Card className="w-full max-w-md">
-              <CardHeader className="flex flex-col items-center gap-4 p-6">
-                <Avatar className="h-24 w-24">
-                  <AvatarImage src="/placeholder-user.jpg" />
-                  <AvatarFallback>JP</AvatarFallback>
-                </Avatar>
-                <div className="text-center">
-                  <h2 className="text-2xl font-bold">Jared Palmer</h2>
-                  <p className="text-gray-500 dark:text-gray-400">
-                    jared@acme.inc
-                  </p>
-                </div>
-              </CardHeader>
-              <CardContent className="grid gap-4 p-6">
-                <Button variant="outline">Update Profile</Button>
-                <Button variant="destructive">Delete Account</Button>
-                <Button>Log Out</Button>
-              </CardContent>
-            </Card>
-          </div>
-        </div>
-        <div></div>
-      </div> */}
     </>
   );
 };
