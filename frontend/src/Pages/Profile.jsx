@@ -1,6 +1,7 @@
 import React from "react";
 import { useSelector } from "react-redux";
 import ProfileUpdate from "./compo/ProfileUpdate";
+import Logout from "./compo/Logout";
 
 export const Profile = () => {
   const { currentUser } = useSelector((state) => state.user);
@@ -19,9 +20,7 @@ export const Profile = () => {
               </p>
               <div class="mt-4 flex items-center flex-col gap-4 w-full ">
                 <ProfileUpdate/>
-                <button class="bg-blue-500 hover:bg-red-600 w-full text-white text-sm font-normal py-2 px-4 rounded">
-                  LogOut
-                </button>
+                <Logout/>
               </div>
             </div>
           </div>

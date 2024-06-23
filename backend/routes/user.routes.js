@@ -5,6 +5,6 @@ const route =express.Router()
 route.post("/signup",signup)
 route.post("/login",login)
 route.post("/userupdate/:id",userUpdate)
-route.post("/logout",logout)
+route.get("/logout",logout)
 
 export default route

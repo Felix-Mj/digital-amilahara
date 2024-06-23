@@ -88,11 +88,13 @@ const userUpdate = async(req, res)=>{
 }
 }
 
-const logout = async (req,res) =>{
-try {
-  res.clearCookie("access_token").status(200).json({ success: true, message: "Logged out successfully" });
-} catch (error) {
-  res.status(500).json({ success: false, message: "Internal server issue" });
-}}
+const logout = (req, res) => {
+  try {
+    res.clearCookie("access_token");
+    res.status(200).json({ success: true, message: "Logout successfully" });
+  } catch (error) {
+    res.status(500).json({ success: false, message: "Internal server issue" });
+  }
+};
 
 export { signup, login, userUpdate, logout };
