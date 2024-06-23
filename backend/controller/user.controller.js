@@ -18,6 +18,12 @@ const signup = async (req, res) => {
     const user = new User({ name, email, password: hash });
     await user.save();
     res.status(201).json({ success: true, message: "User created successfully", user: user });
+    const paylod = {
+      id: user._id,
+    }
+    const token = genToken(paylod)
+    res.cookie("access_token", token, { httpOnly: true }).status(200).json({ success: true, message: "User created successfully", user: user ,token:token });
+
   } catch (error) {
     console.log(error)
     res.status(500).json({ success: false, message: "Internal server problem",error });
@@ -82,5 +88,13 @@ const userUpdate = async(req, res)=>{
 }
 }
 
+const logout = (req, res) => {
+  try {
+    res.clearCookie("access_token");
+    res.status(200).json({ success: true, message: "Logout successfully" });
+  } catch (error) {
+    res.status(500).json({ success: false, message: "Internal server issue" });
+  }
+};
 
-export { signup, login, userUpdate };
+export { signup, login, userUpdate, logout };
