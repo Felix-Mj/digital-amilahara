@@ -11,9 +11,8 @@ const userSchema= new mongoose.Schema({
         unique:true,
     },
     number:{
-        type:Number,
-        unique:true,
-        default:+91
+        type:String,
+        default:"+91"
     },
     password:{
         type:String,
