@@ -17,7 +17,6 @@ const signup = async (req, res) => {
     const hash = await bcript.hash(password, 10);
     const user = new User({ name, email, password: hash });
     await user.save();
-    res.status(201).json({ success: true, message: "User created successfully", user: user });
     const paylod = {
       id: user._id,
     }

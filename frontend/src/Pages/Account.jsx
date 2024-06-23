@@ -1,13 +1,26 @@
 import React, { useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Dialog, DialogContent, DialogTrigger } from "@/components/ui/dialog";
-import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card";
+import {
+  Card,
+  CardContent,
+  CardDescription,
+  CardFooter,
+  CardHeader,
+  CardTitle,
+} from "@/components/ui/card";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
-import { signInFailure, signInStart, signInSuccess } from "@/Redux/user/userSlice";
+import {
+  signInFailure,
+  signInStart,
+  signInSuccess,
+} from "@/Redux/user/userSlice";
 import axios from "axios";
 import { useDispatch } from "react-redux";
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 export default function Account() {
   const [formData, setFormData] = useState({});
@@ -25,12 +38,23 @@ export default function Account() {
     try {
       dispatch(signInStart());
       const res = await axios.post("/api/v1/signup", formData);
-      dispatch(signInSuccess(res.data.user));
-      if (!res) {
-        dispatch(signInFailure());
+      if (res.data.success == true) {
+        toast.success("Signup Succesfull", {
+          position: "top-right",
+        });
+        setIsDialogOpen(false); // Close dialog
+        setTimeout(() => {
+          dispatch(signInSuccess(res.data.user));
+        }, 2000);
       }
-      setIsDialogOpen(false); // Close dialog
     } catch (error) {
+      toast.error("Signup Faild", {
+        position: "top-right",
+      });
+      setIsDialogOpen(false);
+      setTimeout(() => {
+        dispatch(signInFailure());
+      }, 2000);
       console.log(error);
     }
   };
@@ -39,12 +63,32 @@ export default function Account() {
     try {
       dispatch(signInStart());
       const res = await axios.post("/api/v1/login", formData);
-      dispatch(signInSuccess(res.data.user));
-      if (!res) {
-        dispatch(signInFailure());
+      if (res.data.success == true) {
+        toast.success("Login Succesfull", {
+          position: "top-right",
+        });
+        setIsDialogOpen(false);
+        setTimeout(() => {
+          dispatch(signInSuccess(res.data.user));
+        }, 2000);
       }
-      setIsDialogOpen(false);
+      if (res.success == false) {
+        toast.error("Login Faild", {
+          position: "top-right",
+        });
+        setIsDialogOpen(false);
+        setTimeout(() => {
+          dispatch(signInFailure());
+        }, 2000);
+      }
     } catch (error) {
+      toast.error("Login Faild", {
+        position: "top-right",
+      });
+      setIsDialogOpen(false);
+      setTimeout(() => {
+        dispatch(signInFailure());
+      }, 2000);
       console.log(error);
     }
   };
@@ -69,15 +113,33 @@ export default function Account() {
               <CardContent className="space-y-2">
                 <div className="space-y-1">
                   <Label>Name</Label>
-                  <Input id="name" type="text" placeholder="Enter Your Name" required onChange={handleChange} />
+                  <Input
+                    id="name"
+                    type="text"
+                    placeholder="Enter Your Name"
+                    required
+                    onChange={handleChange}
+                  />
                 </div>
                 <div className="space-y-1">
                   <Label>Email</Label>
-                  <Input id="email" type="email" placeholder="Enter Your Email" required onChange={handleChange} />
+                  <Input
+                    id="email"
+                    type="email"
+                    placeholder="Enter Your Email"
+                    required
+                    onChange={handleChange}
+                  />
                 </div>
                 <div className="space-y-1">
                   <Label>Password</Label>
-                  <Input id="password" type="password" placeholder="Enter Your Password" required onChange={handleChange} />
+                  <Input
+                    id="password"
+                    type="password"
+                    placeholder="Enter Your Password"
+                    required
+                    onChange={handleChange}
+                  />
                 </div>
               </CardContent>
               <CardFooter className="flex items-center justify-center">
@@ -94,11 +156,23 @@ export default function Account() {
               <CardContent className="space-y-2">
                 <div className="space-y-1">
                   <Label>Email</Label>
-                  <Input id="email" type="email" placeholder="Enter your email" required onChange={handleChange} />
+                  <Input
+                    id="email"
+                    type="email"
+                    placeholder="Enter your email"
+                    required
+                    onChange={handleChange}
+                  />
                 </div>
                 <div className="space-y-1">
                   <Label>Password</Label>
-                  <Input id="password" type="password" placeholder="Enter your password" required onChange={handleChange} />
+                  <Input
+                    id="password"
+                    type="password"
+                    placeholder="Enter your password"
+                    required
+                    onChange={handleChange}
+                  />
                 </div>
               </CardContent>
               <CardFooter className="flex items-center justify-center">
@@ -108,6 +182,7 @@ export default function Account() {
           </TabsContent>
         </Tabs>
       </DialogContent>
+      <ToastContainer />
     </Dialog>
   );
 }
