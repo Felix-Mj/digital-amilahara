@@ -4,6 +4,7 @@ import dotenv from "dotenv"
 import bodyParser from "body-parser"
 import connectDB from "./config/db.js"
 import paymentRoute from "./routes/payment.routes.js"
+import  localtunnel  from "localtunnel";
 dotenv.config()
 
 const port = 3000
@@ -16,6 +17,8 @@ connectDB()
 app.use("/api/v1", route)
 app.use("/api/v2", paymentRoute)
 
-app.listen(port,()=>{
+app.listen(port, async ()=>{
     console.log(`app runing port http://localhost:${port}`)
+    const tunnel = await  localtunnel({ port: 3000 });
+    console.log(tunnel.url)
 }) 
