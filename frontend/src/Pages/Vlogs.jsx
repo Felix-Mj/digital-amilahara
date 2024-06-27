@@ -7,12 +7,20 @@ import {
   PaginationNext,
   PaginationPrevious,
 } from "@/components/ui/pagination";
-import React, { useState } from "react";
-import { useSelector } from "react-redux";
+import axios from "axios";
+import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 
 export default function Vlogs() {
-  const [data, setData] = useState();
+  useEffect(()=>{
+    const getData = async ()=>{
+
+      const res = await axios.get("/api/v1/bloglist")
+      setData(res.data.data)
+    }
+    getData()
+    },[])
+    const [data, setData] = useState();
   return (
     <div className="flex flex-col min-h-[100dvh]">
       <div className="p-5 md:px-20">
@@ -22,15 +30,15 @@ export default function Vlogs() {
               <Link to={`/blog/${e._id}`} key={i}>
               <div className="flex flex-col md:flex-row gap-4">
                 <img
-                  src={e?.Image}
+                  src={e?.image}
                   alt="Blog post image"
                   width={400}
                   height={250}
                   className="rounded-lg w-full md:w-[400px] h-[250px] object-cover"
                 />
                 <div className="flex-1 space-y-2 w-full">
-                  <h1 className="text-2xl font-bold">{e.Title}</h1>
-                  <p className="text-gray-500">{e.content.substring(0, 180)}</p>
+                  <h1 className="text-2xl font-bold">{e.title}</h1>
+                  <p className="text-gray-500">{e.description.substring(0, 180)}</p>
                   <Link
                     to={`/blog/${e._id}`}
                     className="inline-flex items-center gap-2 text-blue-500 hover:text-blue-600"
