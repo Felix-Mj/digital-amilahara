@@ -12,6 +12,7 @@ import Vlogs from "./Pages/Vlogs";
 import Gallerys from "./Pages/Gallerys";
 import About from "./Pages/About";
 import Contact from "./Pages/Contact";
+import ViewPage from "./Pages/ViewPage";
 
 
 export default function App() {
@@ -26,10 +27,11 @@ export default function App() {
               <Route path="/Profile" element={<Profile />} />
             </Route>
             <Route path="/news" element={<News />} />
-            <Route path="/blogs" element={<Vlogs />}/>
+            <Route path="/blog" element={<Vlogs />}/>
             <Route path="/gallerys" element={<Gallerys />}/>
             <Route path="/about" element={<About />}/>
             <Route path="/contact" element={<Contact />}/>
+            <Route path="/blog/:id" element={<ViewPage />}/>
           </Routes>
         </BrowserRouter>
       </PersistGate>

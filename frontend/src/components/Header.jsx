@@ -52,7 +52,7 @@ export default function Header() {
               News
             </Link>
             <Link
-              to="/blogs"
+              to="/blog"
               className="flex items-center gap-2 font-medium"
               prefetch={false}
             >
@@ -109,7 +109,7 @@ export default function Header() {
             News
           </Link>
           <Link
-            to="/blogs"
+            to="/blog"
             className="flex items-center gap-2 font-medium"
             prefetch={false}
           >
