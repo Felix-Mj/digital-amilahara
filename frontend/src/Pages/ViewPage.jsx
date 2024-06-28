@@ -16,7 +16,7 @@ export default function ViewPage() {
   return (
     <article className="prose prose-gray max-w-3xl mx-auto my-12 dark:prose-invert">
       <div className="space-y-2 not-prose">
-        <h1 className="text-4xl font-extrabold tracking-tight lg:text-5xl">
+        <h1 className="text-3xl font-extrabold tracking-tight lg:text-4xl">
           {data?.title}
         </h1>
         <div className="flex items-center space-x-4">
