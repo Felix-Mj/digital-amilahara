@@ -20,4 +20,14 @@ const getBlog = async (req, res)=>{
     }
 }
 
-export {postBlog, getBlog}
+
+const getBlogById = async (req, res)=>{
+    try {
+        const response = await Blog.findById(req.params.id)
+        res.status(200).json({ message: "Blog show successfully",data:response})
+    } catch (error) {
+        res.status(500).json({ message: "internal server problem",error})   
+    }
+}
+
+export {postBlog, getBlog, getBlogById}
