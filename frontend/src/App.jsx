@@ -13,6 +13,7 @@ import Gallerys from "./Pages/Gallerys";
 import About from "./Pages/About";
 import Contact from "./Pages/Contact";
 import ViewPage from "./Pages/ViewPage";
+import Footerpage from "./Pages/Footerpage";
 
 
 export default function App() {
@@ -33,6 +34,7 @@ export default function App() {
             <Route path="/contact" element={<Contact />}/>
             <Route path="/blog/:id" element={<ViewPage />}/>
           </Routes>
+          <Footerpage/>
         </BrowserRouter>
       </PersistGate>
     </Provider>
