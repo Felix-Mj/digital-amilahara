@@ -9,28 +9,27 @@ Cashfree.XClientSecret = process.env.CASHFREE_SECRET_KEY;
 export const generatePaymentLink = async (req, res) => {
   const { notify } = req.body;
   try {
-    //   const {
-    //     orderId,
-    //     orderAmount,
-    //     customerEmail,
-    //     customerPhone,
-    //     orderCurrency,
-    //     customerName,
-    //  } = req.body;
-    //   console.log("🚀 ~ generatePaymentLink: ~ Id:", orderId);
+       const {
+         orderId,
+         orderAmount,
+         customerEmail,
+         customerPhone,
+         customerName,
+      } = req.body;
+     console.log("🚀 ~ generatePaymentLink: ~ Id:", orderId);
 
     // Calculate expiry time (10 minutes from now)
     const linkExpiry = new Date(Date.now() + 10 * 60000).toISOString(); // 10 minutes * 60000 milliseconds
 
     const request = {
-      link_amount: 111,
+      link_amount: orderAmount,
       link_currency: "INR",
-      link_id: "mi11389",
+      link_id: orderId,
       link_partial_payments: false,
       customer_details: {
-        customer_name: "Chandan",
-        customer_phone: "9438348400",
-        customer_email: "code.tm@gmail.com",
+        customer_name: customerName,
+        customer_phone: customerPhone,
+        customer_email: customerEmail,
       },
       link_expiry_time: linkExpiry,
       link_purpose: `Payment for donation`,
@@ -45,7 +44,7 @@ export const generatePaymentLink = async (req, res) => {
         return_url: "exp://192.168.31.210:8081/transactions",
       },
     };
-    // console.log("🚀 ~ generatePaymentLink: ~ request:", request);
+    console.log("🚀 ~ generatePaymentLink: ~ request:", request);
 
     Cashfree.PGCreateLink("2023-08-01", request)
       .then((response) => {
@@ -71,13 +70,16 @@ export const generatePaymentLink = async (req, res) => {
 export const PaymentSuccess = async (req, res) => {
   try {
     const { data } = req.body;
-  
+    console.log(data)
+  if (!data?.payment) {
+    return res.status(408).json({meassage: "data not receve"})
+  }
     const savePayment = new userPayment({
-      name: data.customer_details.customer_name,
-      amount: data.payment.payment_amount,
-      email: data.customer_details.customer_email,
-      phone: data.customer_details.customer_phone,
-      orderId: data.payment.payment_status,
+      name: data?.customer_details?.customer_name,
+      amount: data?.payment?.payment_amount,
+      email: data?.customer_details?.customer_email,
+      phone: data?.customer_details?.customer_phone,
+      orderId: data?.payment?.payment_status,
     });
     await savePayment.save();
     if (!savePayment) {
