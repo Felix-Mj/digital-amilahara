@@ -4,6 +4,7 @@ const initialState = {
   currentUser: null,
   LogIn: false,
   loading: false,
+  roll: "user"
 };
 
 const userSlice = createSlice({
