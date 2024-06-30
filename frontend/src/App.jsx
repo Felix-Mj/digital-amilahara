@@ -14,6 +14,8 @@ import About from "./Pages/About";
 import Contact from "./Pages/Contact";
 import ViewPage from "./Pages/ViewPage";
 import Footerpage from "./Pages/Footerpage";
+import { AdminPage } from "./Pages/AdminPage";
+import Privetadmin from "./Pages/privetadmin";
 
 
 export default function App() {
@@ -26,6 +28,7 @@ export default function App() {
             <Route path="/" element={<Home />} />
             <Route element={<PrivateRoute />}>
               <Route path="/Profile" element={<Profile />} />
+              <Route path="/admin" element={<AdminPage />} />
             </Route>
             <Route path="/news" element={<News />} />
             <Route path="/blog" element={<Vlogs />}/>

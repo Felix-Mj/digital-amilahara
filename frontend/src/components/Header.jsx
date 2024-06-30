@@ -125,6 +125,20 @@ export default function Header() {
         </nav>
       </div>
       <div>
+        <div className="flex gap-5 justify-center">
+          {
+            currentUser==null ? <></> :currentUser.roll === "admin" ? (
+              <Link
+                to="/admin"
+                className="flex items-center gap-2 font-medium"
+                prefetch={false}
+              >
+                Admin
+              </Link>
+            ) : (
+              <div></div>
+            )
+          }
         {LogIn === false ? (
           <Link
             href="#"
@@ -136,14 +150,13 @@ export default function Header() {
         ) : (
           <Link to={"/profile"}>
             <Avatar>
-              <AvatarImage
-                src={currentUser.avator}
-                alt="@shadcn"
-              />
+              <AvatarImage src={currentUser.avator} alt="@shadcn" />
               <AvatarFallback>CN</AvatarFallback>
             </Avatar>
           </Link>
         )}
+                </div>
+
       </div>
     </header>
   );
