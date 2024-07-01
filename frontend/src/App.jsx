@@ -15,7 +15,6 @@ import Contact from "./Pages/Contact";
 import ViewPage from "./Pages/ViewPage";
 import Footerpage from "./Pages/Footerpage";
 import { AdminPage } from "./Pages/AdminPage";
-import Privetadmin from "./Pages/privetadmin";
 
 
 export default function App() {
