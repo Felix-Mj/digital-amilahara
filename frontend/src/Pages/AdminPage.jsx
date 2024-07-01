@@ -19,7 +19,9 @@ export const AdminPage = () => {
         <Tabs defaultValue="account" className="w-full flex">
           <TabsList className="w-1/5 flex-col mt-20 bg-white">
             <h1 className="text-2xl text-black dark:text-white">Admin Page</h1>
-            <TabsTrigger value="Dashboard" className='mt-5' >Dashboard</TabsTrigger>
+            <TabsTrigger value="Dashboard" className="mt-5">
+              Dashboard
+            </TabsTrigger>
             <TabsTrigger value="Event">Slider Event</TabsTrigger>
             <TabsTrigger value="blog">Blog</TabsTrigger>
             <TabsTrigger value="news">News</TabsTrigger>
@@ -27,26 +29,47 @@ export const AdminPage = () => {
           <div className="w-full">
             <TabsContent value="Dashboard">
               <Card>
-                <CardHeader>
-                  <CardTitle>Account</CardTitle>
-                  <CardDescription>
-                    Make changes to your account here. Click save when you're
-                    done.
-                  </CardDescription>
-                </CardHeader>
-                <CardContent className="space-y-2">
-                  <div className="space-y-1">
-                    <Label htmlFor="name">Name</Label>
-                    <Input id="name" defaultValue="Pedro Duarte" />
-                  </div>
-                  <div className="space-y-1">
-                    <Label htmlFor="username">Username</Label>
-                    <Input id="username" defaultValue="@peduarte" />
-                  </div>
-                </CardContent>
-                <CardFooter>
-                  <Button>Save changes</Button>
-                </CardFooter>
+                <div className="flex">
+                <Card className='w-full'>
+                  <h1 className="flex items-center justify-center">Blog Details</h1>
+                  <table >
+                    <tr>
+                      <th>Title</th>
+                      <th>Delete</th>
+                    </tr>
+                    <tr>
+                      <td>Title</td>
+                      <td>Delete</td>
+                    </tr>
+                  </table>
+                </Card>
+                <Card className='w-full'>
+                  <h1 className="flex items-center justify-center">News Details</h1>
+                  <table>
+                    <tr>
+                      <th>Title</th>
+                      <th>Delete</th>
+                    </tr>
+                    <tr>
+                      <td>Title</td>
+                      <td>Delete</td>
+                    </tr>
+                  </table>
+                </Card>
+                </div>
+                <Card className='w-full mt-2'>
+                  <h1 className="flex items-center justify-center">Event Details</h1>
+                  <table>
+                    <tr>
+                      <th>Title</th>
+                      <th>Delete</th>
+                    </tr>
+                    <tr>
+                      <td>Title</td>
+                      <td>Delete</td>
+                    </tr>
+                  </table>
+                </Card>
               </Card>
             </TabsContent>
             <TabsContent value="Event">
