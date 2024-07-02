@@ -89,6 +89,15 @@ export const AdminPage = () => {
                         </Table>
                       </div>
                     </div>
+                    <div className="flex items-center justify-center gap-8 p-4">
+                      <div>
+                      <ArrowLeft size={26} strokeWidth={3}  className=" hover:text-red-600 cursor-pointer" />
+                      </div>
+                      <p className="font-bold text-2xl">1</p>
+                      <div>
+                      <ArrowRight size={26} strokeWidth={3} className=" hover:text-red-600 cursor-pointer" />
+                      </div>
+                    </div>
                   </Card>
                   <Card className="w-full">
                     <h1 className="flex items-center justify-center font-bold">
@@ -118,6 +127,15 @@ export const AdminPage = () => {
                         })}
                       </TableBody>
                     </Table>
+                    <div className="flex items-center justify-center gap-8 p-4">
+                      <div>
+                      <ArrowLeft size={26} strokeWidth={3}  className=" hover:text-red-600 cursor-pointer" />
+                      </div>
+                      <p className="font-bold text-2xl">1</p>
+                      <div>
+                      <ArrowRight size={26} strokeWidth={3} className=" hover:text-red-600 cursor-pointer" />
+                      </div>
+                    </div>
                   </Card>
                 </div>
                 <Card className="w-full mt-2">
@@ -148,6 +166,15 @@ export const AdminPage = () => {
                       })}
                     </TableBody>
                   </Table>
+                    <div className="flex items-center justify-center gap-8 p-4">
+                      <div>
+                      <ArrowLeft size={26} strokeWidth={3}  className=" hover:text-red-600 cursor-pointer" />
+                      </div>
+                      <p className="font-bold text-2xl">1</p>
+                      <div>
+                      <ArrowRight size={26} strokeWidth={3} className=" hover:text-red-600 cursor-pointer" />
+                      </div>
+                    </div>
                 </Card>
               </Card>
             </TabsContent>
