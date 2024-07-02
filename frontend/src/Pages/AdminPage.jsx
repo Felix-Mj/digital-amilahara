@@ -21,8 +21,12 @@ import {
 } from "@/components/ui/table";
 import axios from "axios";
 import { ArrowLeft, ArrowRight } from "lucide-react";
+import { Textarea } from "@/components/ui/textarea";
+import ReactQuill from 'react-quill';
+import 'react-quill/dist/quill.snow.css';
 
 export const AdminPage = () => {
+  const [value, setValue]= useState()
   const [blogData, setBlogdata] = useState([]);
   useEffect(() => {
     const getData = async () => {
@@ -35,10 +39,10 @@ export const AdminPage = () => {
   return (
     <div className="flex gap-2 p-2">
       <div className="w-full">
-        <Tabs defaultValue="account" className="w-full flex">
+        <Tabs defaultValue="Dashboard" className="w-full flex">
           <TabsList className="w-1/5 flex-col mt-20 bg-white">
             <h1 className="text-2xl text-black dark:text-white">Admin Page</h1>
-            <TabsTrigger value="Dashboard" className="mt-5 border-none" defaultValue="Dashboard">
+            <TabsTrigger value="Dashboard" className="mt-5 border-none">
               Dashboard
             </TabsTrigger>
             <TabsTrigger value="Event">Slider Event</TabsTrigger>
@@ -148,74 +152,76 @@ export const AdminPage = () => {
               </Card>
             </TabsContent>
             <TabsContent value="Event">
-              <Card>
+              <Card className='flex items-center justify-center flex-col w-full'>
                 <CardHeader>
-                  <CardTitle>Password</CardTitle>
-                  <CardDescription>
-                    Change your password here. After saving, you'll be logged
-                    out.
-                  </CardDescription>
+                  <CardTitle>Add Slider</CardTitle>
                 </CardHeader>
-                <CardContent className="space-y-2">
+                <CardContent className="space-y-2 w-1/2">
                   <div className="space-y-1">
-                    <Label htmlFor="current">Current password</Label>
-                    <Input id="current" type="password" />
+                    <Label >Title</Label>
+                    <Input id="title" type="text"placeholder='Enter Title' />
                   </div>
                   <div className="space-y-1">
-                    <Label htmlFor="new">New password</Label>
-                    <Input id="new" type="password" />
+                    <Label >Image</Label>
+                    <Input id="image" type="text" placeholder='Enter Image url' />
+                  </div>
+                  <div className="space-y-1">
+                    <Label >Meassage</Label>
+                    <Textarea placeholder="Type your message here." />
+                  </div>
+                  <div className="space-y-1">
+                    <Label >Text Area</Label>
+                    <Textarea placeholder="Type your message here." />
                   </div>
                 </CardContent>
                 <CardFooter>
-                  <Button>Save password</Button>
+                  <Button>Submit</Button>
                 </CardFooter>
               </Card>
             </TabsContent>
             <TabsContent value="blog">
               <Card>
                 <CardHeader>
-                  <CardTitle>Password</CardTitle>
-                  <CardDescription>
-                    Change your password here. After saving, you'll be logged
-                    out.
-                  </CardDescription>
+                  <CardTitle>Add Blog Post</CardTitle>
                 </CardHeader>
                 <CardContent className="space-y-2">
                   <div className="space-y-1">
-                    <Label htmlFor="current">Current password</Label>
-                    <Input id="current" type="password" />
+                    <Label >Title</Label>
+                    <Input id="title" type="Text" />
                   </div>
                   <div className="space-y-1">
-                    <Label htmlFor="new">New password</Label>
-                    <Input id="new" type="password" />
+                    <Label>Image</Label>
+                    <Input id="image" type="text" placeholder='Enter Image url'/>
+                  </div>
+                  <div className="space-y-1">
+                  <ReactQuill theme="snow" value={value} onChange={setValue} />
                   </div>
                 </CardContent>
                 <CardFooter>
-                  <Button>Save password</Button>
+                  <Button>Submit</Button>
                 </CardFooter>
               </Card>
             </TabsContent>
             <TabsContent value="news">
               <Card>
                 <CardHeader>
-                  <CardTitle>Password</CardTitle>
-                  <CardDescription>
-                    Change your password here. After saving, you'll be logged
-                    out.
-                  </CardDescription>
+                  <CardTitle>Add News</CardTitle>
                 </CardHeader>
                 <CardContent className="space-y-2">
                   <div className="space-y-1">
-                    <Label htmlFor="current">Current password</Label>
-                    <Input id="current" type="password" />
+                    <Label >Title</Label>
+                    <Input id="title" type="Text" />
                   </div>
                   <div className="space-y-1">
-                    <Label htmlFor="new">New password</Label>
-                    <Input id="new" type="password" />
+                    <Label>Image</Label>
+                    <Input id="image" type="text" placeholder='Enter Image url'/>
+                  </div>
+                  <div className="space-y-1">
+                  <ReactQuill theme="snow" value={value} onChange={setValue} />
                   </div>
                 </CardContent>
                 <CardFooter>
-                  <Button>Save password</Button>
+                  <Button>Submit</Button>
                 </CardFooter>
               </Card>
             </TabsContent>
