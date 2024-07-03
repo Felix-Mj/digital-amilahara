@@ -6,6 +6,7 @@ import connectDB from "./config/db.js"
 import paymentRoute from "./routes/payment.routes.js"
 import  localtunnel  from "localtunnel";
 import blogRoute from "./routes/blog.routes.js"
+import sliderRoute from "./routes/slider.routes.js"
 dotenv.config()
 
 const port = 3000
@@ -16,6 +17,7 @@ connectDB()
 
 
 app.use("/api/v1", route)
+app.use("/api/v1", sliderRoute)
 app.use("/api/v1", blogRoute)
 app.use("/api/v2", paymentRoute)
 
