@@ -20,5 +20,15 @@ const postSlider = async (req,res)=>{
     }
 
 }
+ 
+const deleteSlider = async (req, res) =>{
+    try {
+        const id = req.params.id
+        const response = await Slider.findByIdAndDelete(id)
+        res.status(200).json({ message: "Slider deleted successfully",data:response})
+    } catch (error) {
+        res.status(500).json({ message: "internal server problem",error})   
+    }
+}
 
-export {getSlider, postSlider}
+export {getSlider, postSlider, deleteSlider}
