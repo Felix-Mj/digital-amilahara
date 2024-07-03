@@ -38,20 +38,6 @@ export default function Header() {
               About
             </Link>
             <Link
-              to="/contact"
-              className="flex items-center gap-2 font-medium"
-              prefetch={false}
-            >
-              Contact
-            </Link>
-            <Link
-              to="/news"
-              className="flex items-center gap-2 font-medium"
-              prefetch={false}
-            >
-              News
-            </Link>
-            <Link
               to="/blog"
               className="flex items-center gap-2 font-medium"
               prefetch={false}
@@ -59,11 +45,11 @@ export default function Header() {
               Blogs
             </Link>
             <Link
-              to="/gallery"
+              to="/contact"
               className="flex items-center gap-2 font-medium"
               prefetch={false}
             >
-              Gallery
+              Contact
             </Link>
           </nav>
         </SheetContent>
@@ -95,20 +81,6 @@ export default function Header() {
             About
           </Link>
           <Link
-            to="/contact"
-            className="flex items-center gap-2 font-medium"
-            prefetch={false}
-          >
-            Contact
-          </Link>
-          <Link
-            to="/news"
-            className="flex items-center gap-2 font-medium"
-            prefetch={false}
-          >
-            News
-          </Link>
-          <Link
             to="/blog"
             className="flex items-center gap-2 font-medium"
             prefetch={false}
@@ -116,12 +88,13 @@ export default function Header() {
             Blogs
           </Link>
           <Link
-            to="/gallery"
+            to="/contact"
             className="flex items-center gap-2 font-medium"
             prefetch={false}
           >
-            Gallery
+            Contact
           </Link>
+          
         </nav>
       </div>
       <div>

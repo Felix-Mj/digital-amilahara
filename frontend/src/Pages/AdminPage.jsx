@@ -1,24 +1,10 @@
 import React, { useEffect, useState } from "react";
 import { Button } from "@/components/ui/button";
-import {
-  Card,
-  CardContent,
-  CardDescription,
-  CardFooter,
-  CardHeader,
-  CardTitle,
-} from "@/components/ui/card";
+import {Card,CardContent,CardFooter, CardHeader,CardTitle,} from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import {
-  Table,
-  TableHeader,
-  TableRow,
-  TableHead,
-  TableBody,
-  TableCell,
-} from "@/components/ui/table";
+import {Table,TableHeader,TableRow,TableHead,TableBody,TableCell,} from "@/components/ui/table";
 import axios from "axios";
 import { ArrowLeft, ArrowRight } from "lucide-react";
 import { Textarea } from "@/components/ui/textarea";
@@ -31,9 +17,11 @@ export const AdminPage = () => {
   const [value, setValue]= useState()
   const [blogData, setBlogdata] = useState([]);
   const [sliderData, setSliderdata] = useState([]);
+  const [contectusData, setContectusdata] = useState([]);
   const [createBlog, setCreateblog]= useState();
   const [slider, setSlider]= useState()
-
+  const [currentPage, setCurrentPage] = useState(1);
+  const itemsPerPage = 3;
   useEffect(() => {
     const getData = async () => {
       const res = await axios.get("/api/v1/bloglist");
@@ -48,8 +36,16 @@ export const AdminPage = () => {
     };
     getData();
   }, []);
+  useEffect(() => {
+    const getData = async () => {
+      const res = await axios.get("/api/v1/contectus");
+      setContectusdata(res.data.data);
+    };
+    getData();
+  }, []);
 
 
+// this is for take input from user function and submit blog post and slider post
   const handlechangeBlog= (e)=>{
     setCreateblog({...createBlog, [e.target.id]: e.target.value })
   }
@@ -79,6 +75,23 @@ export const AdminPage = () => {
     }
   };
 
+
+  // for the all pagenation for manage api 
+  const handleNextPage = () => {
+    setCurrentPage((prevPage) => prevPage + 1);
+  };
+
+  const handlePreviousPage = () => {
+    setCurrentPage((prevPage) => Math.max(prevPage - 1, 1));
+  };
+  const startIndex = (currentPage - 1) * itemsPerPage;
+  const endIndex = startIndex + itemsPerPage;
+  const currentData = blogData.slice(startIndex, endIndex);
+  const sliderCurrentData = sliderData.slice(startIndex, endIndex);
+  const contectCurrentData = contectusData.slice(startIndex, endIndex);
+
+
+
   return (
     <div className="flex gap-2 p-2">
       <div className="w-full">
@@ -90,14 +103,13 @@ export const AdminPage = () => {
             </TabsTrigger>
             <TabsTrigger value="Event">Slider Event</TabsTrigger>
             <TabsTrigger value="blog">Blog</TabsTrigger>
-            <TabsTrigger value="news">News</TabsTrigger>
           </TabsList>
           <div className="w-full">
             <TabsContent value="Dashboard">
               <Card>
                 <div className="flex">
                   <Card className="w-full">
-                    <h1 className="flex items-center justify-center font-bold">
+                    <h1 className="flex items-center justify-center font-bold mt-5">
                       Blog Details
                     </h1>
                     <div className=" rounded-lg w-full">
@@ -113,9 +125,9 @@ export const AdminPage = () => {
                             </TableRow>
                           </TableHeader>
                           <TableBody>
-                            {blogData.map((e, i) => {
-                              return (
-                                <TableRow key={i}>
+                            {blogData.length > 0 ? (
+                              currentData.map((e, i) => (
+                                <TableRow key={startIndex + i}>
                                   <TableCell className="font-medium">
                                     {e?.title}
                                   </TableCell>
@@ -126,121 +138,203 @@ export const AdminPage = () => {
                                     </Button>
                                   </TableCell>
                                 </TableRow>
-                              );
-                            })}
+                              ))
+                            ) : (
+                              <>Loading</>
+                            )}
                           </TableBody>
                         </Table>
                       </div>
                     </div>
                     <div className="flex items-center justify-center gap-8 p-4">
                       <div>
-                      <ArrowLeft size={26} strokeWidth={3}  className=" hover:text-red-600 cursor-pointer" />
+                        {currentPage > 1 && (
+                          <ArrowLeft
+                            size={26}
+                            onClick={handlePreviousPage}
+                            strokeWidth={3}
+                            className=" hover:text-red-600 cursor-pointer"
+                          />
+                        )}
                       </div>
-                      <p className="font-bold text-2xl">1</p>
+                      <p className="font-bold text-2xl">{currentPage}</p>
                       <div>
-                      <ArrowRight size={26} strokeWidth={3} className=" hover:text-red-600 cursor-pointer" />
+                        {blogData.length > endIndex && (
+                          <ArrowRight
+                            size={26}
+                            strokeWidth={3}
+                            onClick={handleNextPage}
+                            className=" hover:text-red-600 cursor-pointer"
+                          />
+                        )}
                       </div>
                     </div>
                   </Card>
                   <Card className="w-full">
-                    <h1 className="flex items-center justify-center font-bold">
-                      News Details
+                    <h1 className="flex items-center justify-center font-bold mt-5">
+                      Contect-us Details
                     </h1>
-                    <Table className="border-none">
-                      <TableHeader>
-                        <TableRow>
-                          <TableHead className="w-[80%]">Title</TableHead>
-                          <TableHead>Category</TableHead>
-                          <TableHead className="text-right">Delete</TableHead>
-                        </TableRow>
-                      </TableHeader>
-                      <TableBody>
-                        {blogData.map((e, i) => {
-                          return (
-                            <TableRow key={i}>
-                              <TableCell className="font-medium">
-                                {e?.title}
-                              </TableCell>
-                              <TableCell>{e?.category}</TableCell>
-                              <TableCell className="text-right">
-                                <Button variant="destructive">Delete</Button>
-                              </TableCell>
+                    <div className=" rounded-lg w-full">
+                      <div className="relative w-full overflow-auto">
+                        <Table className="border-none">
+                          <TableHeader>
+                            <TableRow>
+                              <TableHead className="w-[10%]">Name</TableHead>
+                              <TableHead>Meassages</TableHead>
+                              <TableHead className="text-right">
+                                Delete
+                              </TableHead>
                             </TableRow>
-                          );
-                        })}
-                      </TableBody>
-                    </Table>
+                          </TableHeader>
+                          <TableBody>
+                            {contectusData.length > 0 ? (
+                              contectCurrentData.map((e, i) => (
+                                <TableRow key={startIndex + i}>
+                                  <TableCell className="font-medium ">
+                                    {e?.name}
+                                  </TableCell>
+                                  <TableCell>{e?.message}</TableCell>
+                                  <TableCell className="text-right">
+                                    <Button variant="destructive">
+                                      Delete
+                                    </Button>
+                                  </TableCell>
+                                </TableRow>
+                              ))
+                            ) : (
+                              <>Loading</>
+                            )}
+                          </TableBody>
+                        </Table>
+                      </div>
+                    </div>
                     <div className="flex items-center justify-center gap-8 p-4">
                       <div>
-                      <ArrowLeft size={26} strokeWidth={3}  className=" hover:text-red-600 cursor-pointer" />
+                        {currentPage > 1 && (
+                          <ArrowLeft
+                            size={26}
+                            onClick={handlePreviousPage}
+                            strokeWidth={3}
+                            className=" hover:text-red-600 cursor-pointer"
+                          />
+                        )}
                       </div>
-                      <p className="font-bold text-2xl">1</p>
+                      <p className="font-bold text-2xl">{currentPage}</p>
                       <div>
-                      <ArrowRight size={26} strokeWidth={3} className=" hover:text-red-600 cursor-pointer" />
+                        {contectusData.length > endIndex && (
+                          <ArrowRight
+                            size={26}
+                            strokeWidth={3}
+                            onClick={handleNextPage}
+                            className=" hover:text-red-600 cursor-pointer"
+                          />
+                        )}
                       </div>
                     </div>
                   </Card>
+                  
                 </div>
-                <Card className="w-full mt-2">
-                  <h1 className="flex items-center justify-center font-bold mt-5">
-                    Slider Details
-                  </h1>
-                  <Table className="border-none">
-                    <TableHeader>
-                      <TableRow>
-                        <TableHead className="w-[80%]">Title</TableHead>
-                        <TableHead className="text-right">Delete</TableHead>
-                      </TableRow>
-                    </TableHeader>
-                    <TableBody>
-                      {sliderData.map((e, i) => {
-                        return (
-                          <TableRow key={i}>
-                            <TableCell className="font-medium">
-                              {e?.title}
-                            </TableCell>
-                            <TableCell>{e?.category}</TableCell>
-                            <TableCell className="text-right">
-                              <Button variant="destructive">Delete</Button>
-                            </TableCell>
-                          </TableRow>
-                        );
-                      })}
-                    </TableBody>
-                  </Table>
-                    <div className="flex items-center justify-center gap-8 p-4">
-                      <div>
-                      <ArrowLeft size={26} strokeWidth={3}  className=" hover:text-red-600 cursor-pointer" />
-                      </div>
-                      <p className="font-bold text-2xl">1</p>
-                      <div>
-                      <ArrowRight size={26} strokeWidth={3} className=" hover:text-red-600 cursor-pointer" />
+                <Card className="w-full">
+                    <h1 className="flex items-center justify-center font-bold mt-5">
+                      Slider Details
+                    </h1>
+                    <div className=" rounded-lg w-full">
+                      <div className="relative w-full overflow-auto">
+                        <Table className="border-none">
+                          <TableHeader>
+                            <TableRow>
+                              <TableHead className="w-[80%]">Title</TableHead>
+                              <TableHead>Image</TableHead>
+                              <TableHead className="text-right">
+                                Delete
+                              </TableHead>
+                            </TableRow>
+                          </TableHeader>
+                          <TableBody>
+                            {sliderData.length > 0 ? (
+                              sliderCurrentData.map((e, i) => (
+                                <TableRow key={startIndex + i}>
+                                  <TableCell className="font-medium">
+                                    {e?.title}
+                                  </TableCell>
+                                  <TableCell>
+                                    <img src={e?.image} className="rounded"/>
+                                  </TableCell>
+                                  <TableCell className="text-right">
+                                    <Button variant="destructive">
+                                      Delete
+                                    </Button>
+                                  </TableCell>
+                                </TableRow>
+                              ))
+                            ) : (
+                              <>Loading</>
+                            )}
+                          </TableBody>
+                        </Table>
                       </div>
                     </div>
-                </Card>
+                    <div className="flex items-center justify-center gap-8 p-4">
+                      <div>
+                        {currentPage > 1 && (
+                          <ArrowLeft
+                            size={26}
+                            onClick={handlePreviousPage}
+                            strokeWidth={3}
+                            className=" hover:text-red-600 cursor-pointer"
+                          />
+                        )}
+                      </div>
+                      <p className="font-bold text-2xl">{currentPage}</p>
+                      <div>
+                        {blogData.length > endIndex && (
+                          <ArrowRight
+                            size={26}
+                            strokeWidth={3}
+                            onClick={handleNextPage}
+                            className=" hover:text-red-600 cursor-pointer"
+                          />
+                        )}
+                      </div>
+                    </div>
+                  </Card>
               </Card>
             </TabsContent>
             <TabsContent value="Event">
-              <Card className='flex items-center justify-center flex-col w-full'>
+              <Card className="flex items-center justify-center flex-col w-full">
                 <CardHeader>
                   <CardTitle>Add Slider</CardTitle>
                 </CardHeader>
                 <CardContent className="space-y-2 w-1/2">
                   <div className="space-y-1">
-                    <Label >Title</Label>
-                    <Input id="title" type="text"placeholder='Enter Title' onChange={handlechangeslider} />
+                    <Label>Title</Label>
+                    <Input
+                      id="title"
+                      type="text"
+                      placeholder="Enter Title"
+                      onChange={handlechangeslider}
+                    />
                   </div>
                   <div className="space-y-1">
-                    <Label >Image</Label>
-                    <Input id="image" type="text" placeholder='Enter Image url' onChange={handlechangeslider} />
+                    <Label>Image</Label>
+                    <Input
+                      id="image"
+                      type="text"
+                      placeholder="Enter Image url"
+                      onChange={handlechangeslider}
+                    />
                   </div>
                   <div className="space-y-1">
-                    <Label >Meassage</Label>
-                    <Textarea id="meassage" placeholder="Type your message here." onChange={handlechangeslider} />
+                    <Label>Meassage</Label>
+                    <Textarea
+                      id="meassage"
+                      placeholder="Type your message here."
+                      onChange={handlechangeslider}
+                    />
                   </div>
                 </CardContent>
                 <CardFooter>
-                  <Button onClick={handleSubmitSlider} >Submit</Button>
+                  <Button onClick={handleSubmitSlider}>Submit</Button>
                 </CardFooter>
               </Card>
             </TabsContent>
@@ -251,46 +345,38 @@ export const AdminPage = () => {
                 </CardHeader>
                 <CardContent className="space-y-2">
                   <div className="space-y-1">
-                    <Label >Title</Label>
+                    <Label>Title</Label>
                     <Input id="title" type="Text" onChange={handlechangeBlog} />
                   </div>
                   <div className="space-y-1">
                     <Label>Categrogry</Label>
-                    <Input id="category" type="text" placeholder='Enter blog categry' onChange={handlechangeBlog}/>
+                    <Input
+                      id="category"
+                      type="text"
+                      placeholder="Enter blog categry"
+                      onChange={handlechangeBlog}
+                    />
                   </div>
                   <div className="space-y-1">
                     <Label>Image</Label>
-                    <Input id="image" type="text" placeholder='Enter Image url' onChange={handlechangeBlog}/>
+                    <Input
+                      id="image"
+                      type="text"
+                      placeholder="Enter Image url"
+                      onChange={handlechangeBlog}
+                    />
                   </div>
                   <div className="space-y-1">
-                  <ReactQuill theme="snow" id="description" value={createBlog} onChange={handlechangeBlog} />
+                    <ReactQuill
+                      theme="snow"
+                      id="description"
+                      value={createBlog}
+                      onChange={handlechangeBlog}
+                    />
                   </div>
                 </CardContent>
                 <CardFooter>
                   <Button onClick={handleSubmitBlog}>Submit</Button>
-                </CardFooter>
-              </Card>
-            </TabsContent>
-            <TabsContent value="news">
-              <Card>
-                <CardHeader>
-                  <CardTitle>Add News</CardTitle>
-                </CardHeader>
-                <CardContent className="space-y-2">
-                  <div className="space-y-1">
-                    <Label >Title</Label>
-                    <Input id="title" type="Text" />
-                  </div>
-                  <div className="space-y-1">
-                    <Label>Image</Label>
-                    <Input id="image" type="text" placeholder='Enter Image url'/>
-                  </div>
-                  <div className="space-y-1">
-                  <ReactQuill theme="snow" value={value} onChange={setValue} />
-                  </div>
-                </CardContent>
-                <CardFooter>
-                  <Button>Submit</Button>
                 </CardFooter>
               </Card>
             </TabsContent>

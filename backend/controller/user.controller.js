@@ -1,6 +1,7 @@
 import bcript, { hash } from "bcrypt";
 import { User } from "../Models/user.models.js";
 import { genToken } from "../middleware/jwt.js";
+import { Contectus } from "../Models/contect.models.js";
 
 const signup = async (req, res) => {
   try {
@@ -96,4 +97,23 @@ const logout = (req, res) => {
   }
 };
 
-export { signup, login, userUpdate, logout };
+const postContectus = async (req, res)=>{
+  try {
+    const { name, email, subject, message } = req.body;
+    const newContectus = new Contectus({ name, email, subject, message });
+    await newContectus.save();
+    res.status(201).json({ message: "message send successfully", data: newContectus });
+  } catch (error) {
+    res.status(500).json({ message: "Internal server error", error });
+  }
+}
+const getContectus = async (req,res) =>{
+  try {
+    const response = await Contectus.find()
+    res.status(200).json({ message: "Contectus show successfully",data:response})
+  } catch (error) {
+    res.status(500).json({ message: "internal server problem",error})
+  }
+}
+
+export { signup, login, userUpdate, logout, getContectus ,postContectus};
