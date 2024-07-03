@@ -29,5 +29,14 @@ const getBlogById = async (req, res)=>{
         res.status(500).json({ message: "internal server problem",error})   
     }
 }
+const deleteblog = async (req, res) =>{
+    try {
+        const id = req.params.id
+        const response = await Blog.findByIdAndDelete(id)
+        res.status(200).json({ message: "Blog deleted successfully",data:response})
+    } catch (error) {
+        res.status(500).json({ message: "internal server problem",error})   
+    }
+}
 
-export {postBlog, getBlog, getBlogById}
+export {postBlog, getBlog, getBlogById, deleteblog}
