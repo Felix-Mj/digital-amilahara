@@ -117,6 +117,48 @@ export const AdminPage = () => {
   const sliderCurrentData = sliderData.slice(startIndexSlider, endIndexSlider);
 
 
+  const handelDelteblogPost = async (id)=>{
+    try {
+      const res = await axios.delete(`/api/v1/bloglist/delete/${id}`);
+      if (res.status == 200) {
+        toast.success("Blog Deleted Succesfully", {
+          position: "top-right",
+        });
+        setBlogdata(blogData.filter((item) => item._id!== e._id));
+      }
+    } catch (error) {
+      console.log(error);
+    }
+  }
+  const handelDelteContectus = async (id)=>{
+    try {
+      const res = await axios.delete(`/api/v1/contectus/d/${id}`);
+      console.log(res)
+      if (res.status == 200) {
+        toast.success("Contect Details Deleted Succesfully", {
+          position: "top-right",
+        });
+        setBlogdata(blogData.filter((item) => item._id!== e._id));
+      }
+    } catch (error) {
+      console.log(error);
+    }
+  }
+  const handelDelteSlider = async (id)=>{
+    try {
+      const res = await axios.delete(`/api/v1/slider/${id}`);
+      console.log(res)
+      if (res.status == 200) {
+        toast.success("Slider Delete Succesfully", {
+          position: "top-right",
+        });
+        setBlogdata(blogData.filter((item) => item._id!== e._id));
+      }
+    } catch (error) {
+      console.log(error);
+    }
+  }
+
 
   return (
     <div className="flex gap-2 p-2">
@@ -159,7 +201,7 @@ export const AdminPage = () => {
                                   </TableCell>
                                   <TableCell>{e?.category}</TableCell>
                                   <TableCell className="text-right">
-                                    <Button variant="destructive">
+                                    <Button onClick={()=>handelDelteblogPost(e._id)} variant="destructive">
                                       Delete
                                     </Button>
                                   </TableCell>
@@ -221,7 +263,7 @@ export const AdminPage = () => {
                                   </TableCell>
                                   <TableCell>{e?.message}</TableCell>
                                   <TableCell className="text-right">
-                                    <Button variant="destructive">
+                                    <Button variant="destructive" onClick={()=>handelDelteContectus(e._id)}>
                                       Delete
                                     </Button>
                                   </TableCell>
@@ -287,7 +329,7 @@ export const AdminPage = () => {
                                     <img src={e?.image} className="rounded"/>
                                   </TableCell>
                                   <TableCell className="text-right">
-                                    <Button variant="destructive">
+                                    <Button variant="destructive" onClick={()=>handelDelteSlider(e._id)}>
                                       Delete
                                     </Button>
                                   </TableCell>
