@@ -116,4 +116,14 @@ const getContectus = async (req,res) =>{
   }
 }
 
-export { signup, login, userUpdate, logout, getContectus ,postContectus};
+const deltelContectus = async (req , res) =>{
+  try {
+    const id = req.params.id
+    const response = await Contectus.findByIdAndDelete(id)
+    res.status(200).json({ message: "Contectus deleted successfully",data:response})
+  } catch (error) {
+    res.status(500).json({ message: "internal server problem",error})   
+  }
+}
+
+export { signup, login, userUpdate, logout, getContectus ,postContectus, deltelContectus};

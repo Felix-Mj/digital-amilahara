@@ -20,7 +20,9 @@ export const AdminPage = () => {
   const [contectusData, setContectusdata] = useState([]);
   const [createBlog, setCreateblog]= useState();
   const [slider, setSlider]= useState()
-  const [currentPage, setCurrentPage] = useState(1);
+  const [currentBlogPage, setcurrentBlogPage] = useState(1);
+  const [currentContectus, setcurrentContectus] = useState(1);
+  const [currentSlider, setcurrentSlider] = useState(1);
   const itemsPerPage = 3;
   useEffect(() => {
     const getData = async () => {
@@ -77,19 +79,85 @@ export const AdminPage = () => {
 
 
   // for the all pagenation for manage api 
-  const handleNextPage = () => {
-    setCurrentPage((prevPage) => prevPage + 1);
+  const handleBlogNextPage = () => {
+    setcurrentBlogPage((prevPage) => prevPage + 1);
   };
-
-  const handlePreviousPage = () => {
-    setCurrentPage((prevPage) => Math.max(prevPage - 1, 1));
+  
+  const handleBlogPreviousPage = () => {
+    setcurrentBlogPage((prevPage) => Math.max(prevPage - 1, 1));
   };
-  const startIndex = (currentPage - 1) * itemsPerPage;
+  // pagenation for blog dettels
+  const startIndex = (currentBlogPage - 1) * itemsPerPage;
   const endIndex = startIndex + itemsPerPage;
   const currentData = blogData.slice(startIndex, endIndex);
-  const sliderCurrentData = sliderData.slice(startIndex, endIndex);
-  const contectCurrentData = contectusData.slice(startIndex, endIndex);
 
+// handle constecus data pagenation
+  const handleContecusNextPage = () => {
+    setcurrentContectus((prevPage) => prevPage + 1);
+  };
+  const handleContecusPreviousPage = () => {
+    setcurrentContectus((prevPage) => Math.max(prevPage - 1, 1));
+  };
+
+// pagenation for contect us
+  const startIndexContectus = (currentContectus - 1) * itemsPerPage;
+  const endIndexContectus = startIndexContectus + itemsPerPage;
+  const contectCurrentData = contectusData.slice(startIndexContectus, endIndexContectus);
+
+  //  handel slider 
+  const handleSliderNextPage = () => {
+    setcurrentSlider((prevPage) => prevPage + 1);
+  };
+  const handleSliderPreviousPage = () => {
+    setcurrentSlider((prevPage) => Math.max(prevPage - 1, 1));
+  };
+
+  const startIndexSlider = (currentSlider - 1) * itemsPerPage;
+  const endIndexSlider = startIndexSlider + itemsPerPage;
+  const sliderCurrentData = sliderData.slice(startIndexSlider, endIndexSlider);
+
+
+  const handelDelteblogPost = async (id)=>{
+    try {
+      const res = await axios.delete(`/api/v1/bloglist/delete/${id}`);
+      if (res.status == 200) {
+        toast.success("Blog Deleted Succesfully", {
+          position: "top-right",
+        });
+        setBlogdata(blogData.filter((item) => item._id!== e._id));
+      }
+    } catch (error) {
+      console.log(error);
+    }
+  }
+  const handelDelteContectus = async (id)=>{
+    try {
+      const res = await axios.delete(`/api/v1/contectus/d/${id}`);
+      console.log(res)
+      if (res.status == 200) {
+        toast.success("Contect Details Deleted Succesfully", {
+          position: "top-right",
+        });
+        setBlogdata(blogData.filter((item) => item._id!== e._id));
+      }
+    } catch (error) {
+      console.log(error);
+    }
+  }
+  const handelDelteSlider = async (id)=>{
+    try {
+      const res = await axios.delete(`/api/v1/slider/${id}`);
+      console.log(res)
+      if (res.status == 200) {
+        toast.success("Slider Delete Succesfully", {
+          position: "top-right",
+        });
+        setBlogdata(blogData.filter((item) => item._id!== e._id));
+      }
+    } catch (error) {
+      console.log(error);
+    }
+  }
 
 
   return (
@@ -133,7 +201,7 @@ export const AdminPage = () => {
                                   </TableCell>
                                   <TableCell>{e?.category}</TableCell>
                                   <TableCell className="text-right">
-                                    <Button variant="destructive">
+                                    <Button onClick={()=>handelDelteblogPost(e._id)} variant="destructive">
                                       Delete
                                     </Button>
                                   </TableCell>
@@ -148,22 +216,22 @@ export const AdminPage = () => {
                     </div>
                     <div className="flex items-center justify-center gap-8 p-4">
                       <div>
-                        {currentPage > 1 && (
+                        {currentBlogPage > 1 && (
                           <ArrowLeft
                             size={26}
-                            onClick={handlePreviousPage}
+                            onClick={handleBlogPreviousPage}
                             strokeWidth={3}
                             className=" hover:text-red-600 cursor-pointer"
                           />
                         )}
                       </div>
-                      <p className="font-bold text-2xl">{currentPage}</p>
+                      <p className="font-bold text-2xl">{currentBlogPage}</p>
                       <div>
                         {blogData.length > endIndex && (
                           <ArrowRight
                             size={26}
                             strokeWidth={3}
-                            onClick={handleNextPage}
+                            onClick={handleBlogNextPage}
                             className=" hover:text-red-600 cursor-pointer"
                           />
                         )}
@@ -195,7 +263,7 @@ export const AdminPage = () => {
                                   </TableCell>
                                   <TableCell>{e?.message}</TableCell>
                                   <TableCell className="text-right">
-                                    <Button variant="destructive">
+                                    <Button variant="destructive" onClick={()=>handelDelteContectus(e._id)}>
                                       Delete
                                     </Button>
                                   </TableCell>
@@ -210,22 +278,22 @@ export const AdminPage = () => {
                     </div>
                     <div className="flex items-center justify-center gap-8 p-4">
                       <div>
-                        {currentPage > 1 && (
+                        {currentContectus > 1 && (
                           <ArrowLeft
                             size={26}
-                            onClick={handlePreviousPage}
+                            onClick={handleContecusPreviousPage}
                             strokeWidth={3}
                             className=" hover:text-red-600 cursor-pointer"
                           />
                         )}
                       </div>
-                      <p className="font-bold text-2xl">{currentPage}</p>
+                      <p className="font-bold text-2xl">{currentContectus}</p>
                       <div>
-                        {contectusData.length > endIndex && (
+                        {contectusData.length > endIndexContectus && (
                           <ArrowRight
                             size={26}
                             strokeWidth={3}
-                            onClick={handleNextPage}
+                            onClick={handleContecusNextPage}
                             className=" hover:text-red-600 cursor-pointer"
                           />
                         )}
@@ -261,7 +329,7 @@ export const AdminPage = () => {
                                     <img src={e?.image} className="rounded"/>
                                   </TableCell>
                                   <TableCell className="text-right">
-                                    <Button variant="destructive">
+                                    <Button variant="destructive" onClick={()=>handelDelteSlider(e._id)}>
                                       Delete
                                     </Button>
                                   </TableCell>
@@ -276,22 +344,22 @@ export const AdminPage = () => {
                     </div>
                     <div className="flex items-center justify-center gap-8 p-4">
                       <div>
-                        {currentPage > 1 && (
+                        {currentSlider > 1 && (
                           <ArrowLeft
                             size={26}
-                            onClick={handlePreviousPage}
+                            onClick={handleSliderPreviousPage}
                             strokeWidth={3}
                             className=" hover:text-red-600 cursor-pointer"
                           />
                         )}
                       </div>
-                      <p className="font-bold text-2xl">{currentPage}</p>
+                      <p className="font-bold text-2xl">{currentSlider}</p>
                       <div>
-                        {blogData.length > endIndex && (
+                        {sliderData.length > endIndexSlider && (
                           <ArrowRight
                             size={26}
                             strokeWidth={3}
-                            onClick={handleNextPage}
+                            onClick={handleSliderNextPage}
                             className=" hover:text-red-600 cursor-pointer"
                           />
                         )}
