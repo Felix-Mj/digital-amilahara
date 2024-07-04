@@ -1,4 +1,4 @@
-import axios from "axios";
+import api from '../../../api'
 import React, { useState } from "react";
 import { useSelector } from "react-redux";
 import { Link } from "react-router-dom";
@@ -10,7 +10,7 @@ export default function Donation() {
   const [amount, setAmount]= useState()
   const[useData, setUserData]=useState()
     const handleDonate = () => {
-      const payment = axios.post("/api/v2/payment",
+      const payment = api.post("/api/v2/payment",
 
       )
        

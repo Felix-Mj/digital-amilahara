@@ -7,13 +7,13 @@ import {
   CarouselNext,
 } from "@/components/ui/carousel";
 import { ChevronLeftIcon, ChevronRightIcon } from "lucide-react";
-import axios from "axios";
+import api from "../../../api";
 
 export default function Slider() {
   const [slider, setSlider] = useState([])
   useEffect(()=>{
     const fetchData = async ()=>{
-      const res = await axios.get('/api/v1/slider')
+      const res = await api.get('/api/v1/slider')
       setSlider(res.data.data)
       console.log(res.data.data)
     }

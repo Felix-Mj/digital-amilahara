@@ -13,9 +13,9 @@ import {
   TwitterIcon,
 } from "lucide-react";
 import { Link } from "react-router-dom";
-import axios from "axios";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import api from "../../api";
 
 export default function Contact() {
   const [userData, setUserData] = useState();
@@ -25,7 +25,7 @@ export default function Contact() {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      const res = await axios.post("/api/v1/contectus", userData);
+      const res = await api.post("/api/v1/contectus", userData);
       console.log(res.data);
       if (res.status == 201) {
         toast.success("Your message has been sent successfully", {

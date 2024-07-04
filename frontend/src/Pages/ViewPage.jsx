@@ -1,4 +1,4 @@
-import axios from "axios";
+import api from "../../api";
 import React, { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 
@@ -7,7 +7,7 @@ export default function ViewPage() {
     const id = useParams()
     useEffect(()=>{
         const getData = async ()=>{
-            const res = await axios.get(`/api/v1/bloglist/${id.id}`)
+            const res = await api.get(`/api/v1/bloglist/${id.id}`)
             console.log(res.data.data)
             setData(res.data.data)
         }
