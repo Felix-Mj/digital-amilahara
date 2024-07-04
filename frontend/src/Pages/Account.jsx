@@ -17,7 +17,7 @@ import {
   signInStart,
   signInSuccess,
 } from "@/Redux/user/userSlice";
-import axios from "axios";
+import api from '../../api'
 import { useDispatch } from "react-redux";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
@@ -37,7 +37,7 @@ export default function Account() {
   const handleSubmit = async () => {
     try {
       dispatch(signInStart());
-      const res = await axios.post("/api/v1/signup", formData);
+      const res = await api.post("/api/v1/signup", formData);
       if (res.data.success == true) {
         toast.success("Signup Succesfull", {
           position: "top-right",
@@ -62,7 +62,7 @@ export default function Account() {
   const handleLogin = async () => {
     try {
       dispatch(signInStart());
-      const res = await axios.post("/api/v1/login", formData);
+      const res = await api.post("/api/v1/login", formData);
       if (res.data.success == true) {
         toast.success("Login Succesfull", {
           position: "top-right",

@@ -12,7 +12,7 @@ import {
 import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
 import { useDispatch, useSelector } from 'react-redux'
-import axios from 'axios'
+import api from '../../../api'
 import { updateUserFailure, updateUserStart, updateUserSuccess } from '@/Redux/user/userSlice'
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
@@ -28,7 +28,7 @@ export default function ProfileUpdate() {
     const handleSubmit = async () => {
       try {
         Dispatch(updateUserStart());
-        const res =await axios.post(
+        const res =await api.post(
           `/api/v1/userupdate/${currentUser._id}`,
           formData
         );

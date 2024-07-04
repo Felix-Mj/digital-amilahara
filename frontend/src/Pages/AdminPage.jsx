@@ -5,13 +5,13 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import {Table,TableHeader,TableRow,TableHead,TableBody,TableCell,} from "@/components/ui/table";
-import axios from "axios";
 import { ArrowLeft, ArrowRight } from "lucide-react";
 import { Textarea } from "@/components/ui/textarea";
 import ReactQuill from 'react-quill';
 import 'react-quill/dist/quill.snow.css';
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import api from '../../api'
 
 export const AdminPage = () => {
   const [value, setValue]= useState()
@@ -26,21 +26,21 @@ export const AdminPage = () => {
   const itemsPerPage = 3;
   useEffect(() => {
     const getData = async () => {
-      const res = await axios.get("/api/v1/bloglist");
+      const res = await api.get("/api/v1/bloglist");
       setBlogdata(res.data.data);
     };
     getData();
   }, []);
   useEffect(() => {
     const getData = async () => {
-      const res = await axios.get("/api/v1/slider");
+      const res = await api.get("/api/v1/slider");
       setSliderdata(res.data.data);
     };
     getData();
   }, []);
   useEffect(() => {
     const getData = async () => {
-      const res = await axios.get("/api/v1/contectus");
+      const res = await api.get("/api/v1/contectus");
       setContectusdata(res.data.data);
     };
     getData();
@@ -56,7 +56,7 @@ export const AdminPage = () => {
   }
   const handleSubmitBlog= async ()=>{
     try {
-      const res = await axios.post("/api/v1/blog", createBlog);
+      const res = await api.post("/api/v1/blog", createBlog);
       if (res.data.success == true) {
         toast.success("Blog Created Succesfully", {
           position: "top-right",
@@ -68,7 +68,7 @@ export const AdminPage = () => {
     }
   }
   const handleSubmitSlider = async () => {
-    const res = await axios.post("/api/v1/slider", slider);
+    const res = await api.post("/api/v1/slider", slider);
     if (res.status == 201) {
       toast.success("Slider Created Succesfully", {
         position: "top-right",
@@ -119,7 +119,7 @@ export const AdminPage = () => {
 
   const handelDelteblogPost = async (id)=>{
     try {
-      const res = await axios.delete(`/api/v1/bloglist/delete/${id}`);
+      const res = await api.delete(`/api/v1/bloglist/delete/${id}`);
       if (res.status == 200) {
         toast.success("Blog Deleted Succesfully", {
           position: "top-right",
@@ -132,7 +132,7 @@ export const AdminPage = () => {
   }
   const handelDelteContectus = async (id)=>{
     try {
-      const res = await axios.delete(`/api/v1/contectus/d/${id}`);
+      const res = await api.delete(`/api/v1/contectus/d/${id}`);
       console.log(res)
       if (res.status == 200) {
         toast.success("Contect Details Deleted Succesfully", {
@@ -146,7 +146,7 @@ export const AdminPage = () => {
   }
   const handelDelteSlider = async (id)=>{
     try {
-      const res = await axios.delete(`/api/v1/slider/${id}`);
+      const res = await api.delete(`/api/v1/slider/${id}`);
       console.log(res)
       if (res.status == 200) {
         toast.success("Slider Delete Succesfully", {

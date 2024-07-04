@@ -7,16 +7,16 @@ import {
   PaginationNext,
   PaginationPrevious,
 } from "@/components/ui/pagination";
-import axios from "axios";
 import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
+import api from '../../api'
 
 export default function Vlogs() {
   const [currentPage, setCurrentPage] = useState(1);
   const itemsPerPage = 6;
   useEffect(() => {
     const getData = async () => {
-      const res = await axios.get("/api/v1/bloglist");
+      const res = await api.get("/api/v1/bloglist");
       setData(res.data.data);
     };
     getData();

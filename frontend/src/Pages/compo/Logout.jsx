@@ -13,7 +13,7 @@ import {
   DialogTitle,
   DialogTrigger,
 } from "@/components/ui/dialog";
-import axios from "axios";
+import api from '../../../api'
 import React, { useState } from "react";
 import { useDispatch } from "react-redux";
 import { ToastContainer, toast } from "react-toastify";
@@ -25,7 +25,7 @@ export default function Logout() {
   const handleOnSubmit = async () => {
     try {
       Dispatch(logOutStart());
-      const res = await axios.get("/api/v1/logout");
+      const res = await api.get("/api/v1/logout");
       console.log();
       if (res.data.success == true) {
         setIsDialogOpen(false);
