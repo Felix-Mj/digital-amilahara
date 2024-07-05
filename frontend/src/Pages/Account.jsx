@@ -55,7 +55,6 @@ export default function Account() {
       setTimeout(() => {
         dispatch(signInFailure());
       }, 2000);
-      console.log(error);
     }
   };
 
@@ -89,7 +88,6 @@ export default function Account() {
       setTimeout(() => {
         dispatch(signInFailure());
       }, 2000);
-      console.log(error);
     }
   };
 

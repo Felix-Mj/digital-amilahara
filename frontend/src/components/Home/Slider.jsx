@@ -15,13 +15,12 @@ export default function Slider() {
     const fetchData = async ()=>{
       const res = await api.get('/api/v1/slider')
       setSlider(res.data.data)
-      console.log(res.data.data)
     }
     fetchData()
   },[])
   return (
     <div className="w-full mx-auto">
-      <Carousel className="rounded-lg overflow-hidden">
+      <Carousel className=" overflow-hidden">
         <CarouselContent>
           {slider.map((e,i)=>{
             return(
@@ -32,7 +31,7 @@ export default function Slider() {
                 alt="Slide 1"
                 width={800}
                 height={400}
-                className="w-full h-[400px] object-cover"
+                className="w-full h-[400px] object-fit "
               />
               <div className="absolute inset-0 bg-gradient-to-t from-black/50 to-transparent flex items-end p-6">
                 <div className="text-white space-y-2">
