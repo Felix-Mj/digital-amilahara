@@ -6,13 +6,32 @@ import { Input } from "../ui/input";
 
 export default function Donation() {
   const {currentUser} = useSelector((state)=>state.user)
-  console.log(currentUser)
-  const [amount, setAmount]= useState()
-  const[useData, setUserData]=useState()
-    const handleDonate = () => {
-      const payment = api.post("/api/v2/payment",
-
-      )
+  const getCurrentDateTime = () => {
+    const now = new Date();
+    const year = now.getFullYear();
+    const month = String(now.getMonth() + 1).padStart(2, '0');
+    const date = String(now.getDate()).padStart(2, '0');
+    const hours = String(now.getHours()).padStart(2, '0');
+    const minutes = String(now.getMinutes()).padStart(2, '0');
+    const seconds = String(now.getSeconds()).padStart(2, '0');
+  
+    return `${year}${month}${date}:${hours}:${minutes}:${seconds}`;
+  };
+  const[useData, setUserData]=useState(
+    {
+      orderId: getCurrentDateTime(),
+      customerName: currentUser?.name,
+      customerEmail: currentUser?.email,
+      customerPhone: currentUser?.number,
+    }
+  )
+  const handleOrderAmountChange = (e) => {
+    setUserData({ ...useData, [e.target.id]: e.target.value });
+  };
+  console.log(useData)
+    const handleDonate = async () => {
+      const payment =await api.post("/api/v2/payment", useData)
+      console.log(payment)
        
     }
   return (
@@ -29,11 +48,10 @@ export default function Donation() {
           </p>
           <Input
           type="number"
+          id="orderAmount"
+          onChange={handleOrderAmountChange}
             placeholder="Enter your donation amount"
-            value={amount}
             className="flex items-center justify-center w-[50%]"
-            onChange={(e) => setAmount(e.target.value)}
-            Value={amount}
           />
           <Link
           onClick={handleDonate}
