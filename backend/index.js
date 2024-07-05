@@ -7,12 +7,19 @@ import paymentRoute from "./routes/payment.routes.js"
 import  localtunnel  from "localtunnel";
 import blogRoute from "./routes/blog.routes.js"
 import sliderRoute from "./routes/slider.routes.js"
+import cors from 'cors';
 dotenv.config()
 
 const port = 3000
 const app = express()
 app.use(bodyParser.json())
 connectDB()
+app.use(cors(
+    {
+        origin: ['http://localhost:5173', "https://digital-amilahara.vercel.app"] ,
+        credentials: true,
+    }
+));
 
 
 

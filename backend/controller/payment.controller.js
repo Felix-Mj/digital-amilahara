@@ -7,7 +7,6 @@ Cashfree.XClientId = process.env.CASHFREE_APP_ID;
 Cashfree.XClientSecret = process.env.CASHFREE_SECRET_KEY;
 
 export const generatePaymentLink = async (req, res) => {
-  const { notify } = req.body;
   try {
        const {
          orderId,
@@ -39,7 +38,7 @@ export const generatePaymentLink = async (req, res) => {
       },
       link_auto_reminders: false,
       link_meta: {
-        notify_url: notify,
+        notify_url: "https://digital-amilahara-nf42.vercel.app/api/v2/paymentconfrom",
         upi_intent: false,
         return_url: "exp://192.168.31.210:8081/transactions",
       },
