@@ -1,7 +1,7 @@
 import axios from 'axios';
 
 const api = axios.create({
-  baseURL: 'http://localhost:3000', // Replace with your backend base URL
+  baseURL: 'https://digital-amilahara-nf42.vercel.app', // Replace with your backend base URL
   headers: {
     'Content-Type': 'application/json',
     // Add other default headers here
