@@ -8,13 +8,12 @@ export default function ViewPage() {
     useEffect(()=>{
         const getData = async ()=>{
             const res = await api.get(`/api/v1/bloglist/${id.id}`)
-            console.log(res.data.data)
             setData(res.data.data)
         }
         getData()   
     },[])
   return (
-    <article className="prose prose-gray max-w-3xl mx-auto my-12 dark:prose-invert">
+    <article className="px-2 md:prose prose-gray max-w-3xl mx-auto my-12 dark:prose-invert">
       <div className="space-y-2 not-prose">
         <h1 className="text-3xl font-extrabold tracking-tight lg:text-4xl">
           {data?.title}

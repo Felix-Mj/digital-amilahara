@@ -26,7 +26,6 @@ export default function Logout() {
     try {
       Dispatch(logOutStart());
       const res = await api.get("/api/v1/logout");
-      console.log();
       if (res.data.success == true) {
         setIsDialogOpen(false);
         toast.success("Logout successfully", {

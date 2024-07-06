@@ -26,7 +26,6 @@ export default function Contact() {
     e.preventDefault();
     try {
       const res = await api.post("/api/v1/contectus", userData);
-      console.log(res.data);
       if (res.status == 201) {
         toast.success("Your message has been sent successfully", {
           position: "top-right",
@@ -40,7 +39,7 @@ export default function Contact() {
     }
   };
   return (
-    <div className="w-full max-w-4xl mx-auto  md:py-20">
+    <div className="w-full p-3 md:max-w-4xl mx-auto ">
       <div className="space-y-6 text-center">
         <h1 className="text-3xl font-bold tracking-tight sm:text-4xl">
           Contact Us

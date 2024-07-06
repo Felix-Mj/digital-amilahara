@@ -133,7 +133,6 @@ export const AdminPage = () => {
   const handelDelteContectus = async (id)=>{
     try {
       const res = await api.delete(`/api/v1/contectus/d/${id}`);
-      console.log(res)
       if (res.status == 200) {
         toast.success("Contect Details Deleted Succesfully", {
           position: "top-right",
@@ -147,7 +146,6 @@ export const AdminPage = () => {
   const handelDelteSlider = async (id)=>{
     try {
       const res = await api.delete(`/api/v1/slider/${id}`);
-      console.log(res)
       if (res.status == 200) {
         toast.success("Slider Delete Succesfully", {
           position: "top-right",
@@ -161,7 +159,11 @@ export const AdminPage = () => {
 
 
   return (
-    <div className="flex gap-2 p-2">
+    <div>
+      <div className="flex items-center justify-center h-screen lg:hidden">
+        <h1>Please Login Big Screen</h1>
+      </div>
+      <div className=" hidden lg:flex gap-2 p-2">
       <div className="w-full">
         <Tabs defaultValue="Dashboard" className="w-full flex">
           <TabsList className="w-1/5 flex-col mt-20 bg-white">
@@ -453,5 +455,7 @@ export const AdminPage = () => {
       </div>
       <ToastContainer />
     </div>
+    </div>
+    
   );
 };
