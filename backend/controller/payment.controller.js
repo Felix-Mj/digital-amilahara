@@ -40,7 +40,7 @@ export const generatePaymentLink = async (req, res) => {
       link_meta: {
         notify_url: "https://digital-amilahara-nf42.vercel.app/api/v2/paymentconfrom",
         upi_intent: false,
-        return_url: "exp://192.168.31.210:8081/transactions",
+        return_url: "https://digital-amilahara.vercel.app",
       },
     };
     console.log("🚀 ~ generatePaymentLink: ~ request:", request);

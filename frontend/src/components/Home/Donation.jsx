@@ -1,11 +1,14 @@
-import api from '../../../api'
+import api from '../../../api';
 import React, { useState } from "react";
 import { useSelector } from "react-redux";
 import { Link } from "react-router-dom";
 import { Input } from "../ui/input";
+// import { useNavigate } from 'react-router-dom';
 
 export default function Donation() {
-  const {currentUser} = useSelector((state)=>state.user)
+  const { currentUser } = useSelector((state) => state.user);
+  
+  // Generate a unique order ID
   const getCurrentDateTime = () => {
     const now = new Date();
     const year = now.getFullYear();
@@ -15,25 +18,33 @@ export default function Donation() {
     const minutes = String(now.getMinutes()).padStart(2, '0');
     const seconds = String(now.getSeconds()).padStart(2, '0');
   
-    return `${year}${month}${date}:${hours}:${minutes}:${seconds}`;
+    return `ID${year}${month}${date}${hours}${minutes}${seconds}`;
   };
-  const[useData, setUserData]=useState(
-    {
-      orderId: getCurrentDateTime(),
-      customerName: currentUser?.name,
-      customerEmail: currentUser?.email,
-      customerPhone: currentUser?.number,
-    }
-  )
+
+  const [useData, setUserData] = useState({
+    orderId: getCurrentDateTime(),
+    customerName: currentUser?.name,
+    customerEmail: currentUser?.email,
+    customerPhone: currentUser?.number,
+  });
+
+  // Handle order amount change
   const handleOrderAmountChange = (e) => {
     setUserData({ ...useData, [e.target.id]: e.target.value });
   };
-  console.log(useData)
-    const handleDonate = async () => {
-      const payment =await api.post("/api/v2/payment", useData)
-      console.log(payment)
-       
+
+  // Handle the donation process
+  const handleDonate = async () => {
+    try {
+      const payment = await api.post("/api/v2/payment", useData);
+      // Redirect to the payment URL
+      window.location.href = payment.data.url;
+      console.log(payment.data.url);
+    } catch (error) {
+      console.error("Error processing payment:", error);
     }
+  };
+
   return (
     <section className="w-full py-12 md:py-24 lg:py-32 bg-[#f5f5f5]">
       <div className="container px-4 md:px-6 text-center">
@@ -47,15 +58,15 @@ export default function Donation() {
             community.
           </p>
           <Input
-          type="number"
-          id="orderAmount"
-          onChange={handleOrderAmountChange}
+            type="number"
+            id="orderAmount"
+            onChange={handleOrderAmountChange}
             placeholder="Enter your donation amount"
             className="flex items-center justify-center w-[50%]"
           />
           <Link
-          onClick={handleDonate}
-            href="#"
+            onClick={handleDonate}
+            to="#"
             className="inline-flex h-10 items-center justify-center rounded-md bg-primary px-8 text-sm font-medium text-primary-foreground shadow transition-colors hover:bg-primary/90 focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring disabled:pointer-events-none disabled:opacity-50"
             prefetch={false}
           >
