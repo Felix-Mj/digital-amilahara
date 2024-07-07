@@ -94,3 +94,15 @@ export const PaymentSuccess = async (req, res) => {
     console.log(error)
   }
 };
+
+export const paymentHistory = async (req, res) => {
+  try {
+    const email = req.params.email;
+    const paymentHistory = await userPayment.find(email);
+    res.status(200).json({ success: true, message: "Payment History", data: paymentHistory });
+  } catch (error) {
+    console.log(error);
+    res.status(500).json({ success: false, message: "Internal server problem", error });
+  }
+};
+
