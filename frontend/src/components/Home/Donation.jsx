@@ -1,10 +1,10 @@
 import api from '../../../api';
 import React, { useState } from "react";
 import { useSelector } from "react-redux";
-import { Link } from "react-router-dom";
 import { Input } from "../ui/input";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import { Button } from '../ui/button';
 
 export default function Donation() {
   const { currentUser } = useSelector((state) => state.user);
@@ -42,8 +42,16 @@ export default function Donation() {
           position: "top-right",
         });
         return;
-      } if (!useData.customerPhone) {
-        toast.error("Please update number")
+      } if (useData.customerPhone.length<=9) {
+        toast.error("Please update number",{
+          position: "top-right",
+        })
+        return;
+      } if (!useData.orderAmount) {
+        toast.error("Enter Amont",{
+          position: "top-right",
+        })
+        return;
       }
       else{
         const payment = await api.post("/api/v2/payment", useData);
@@ -74,14 +82,13 @@ export default function Donation() {
             placeholder="Enter your donation amount"
             className="flex items-center justify-center w-[50%]"
           />
-          <Link
+          <Button
             onClick={handleDonate}
-            to="#"
             className="inline-flex h-10 items-center justify-center rounded-md bg-primary px-8 text-sm font-medium text-primary-foreground shadow transition-colors hover:bg-primary/90 focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring disabled:pointer-events-none disabled:opacity-50"
             prefetch={false}
           >
             Donate Now
-          </Link>
+          </Button>
         </div>
       </div>
       <ToastContainer/>
