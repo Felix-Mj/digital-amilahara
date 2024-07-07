@@ -24,7 +24,7 @@ export default function Slider() {
         <CarouselContent>
           {slider.map((e,i)=>{
             return(
-              <CarouselItem>
+              <CarouselItem key={i}>
             <div className="relative">
               <img
                 src={e?.image}

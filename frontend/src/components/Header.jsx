@@ -134,7 +134,7 @@ export default function Header() {
           ) : (
             <Link to={"/profile"}>
               <Avatar>
-                <AvatarImage src={currentUser.avator} alt="@shadcn" />
+                <AvatarImage src={currentUser?.avator} alt="@shadcn" />
                 <AvatarFallback>CN</AvatarFallback>
               </Avatar>
             </Link>
