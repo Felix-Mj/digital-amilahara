@@ -3,7 +3,8 @@ import React, { useState } from "react";
 import { useSelector } from "react-redux";
 import { Link } from "react-router-dom";
 import { Input } from "../ui/input";
-// import { useNavigate } from 'react-router-dom';
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 export default function Donation() {
   const { currentUser } = useSelector((state) => state.user);
@@ -36,10 +37,19 @@ export default function Donation() {
   // Handle the donation process
   const handleDonate = async () => {
     try {
-      const payment = await api.post("/api/v2/payment", useData);
-      // Redirect to the payment URL
-      window.location.href = payment.data.url;
-      console.log(payment.data.url);
+      if (!useData.customerEmail) {
+        toast.error("Please Login", {
+          position: "top-right",
+        });
+        return;
+      } if (!useData.customerPhone) {
+        toast.error("Please update number")
+      }
+      else{
+        const payment = await api.post("/api/v2/payment", useData);
+        window.location.href = payment.data.url;
+        console.log(payment.data.url);
+      }
     } catch (error) {
       console.error("Error processing payment:", error);
     }
@@ -74,6 +84,7 @@ export default function Donation() {
           </Link>
         </div>
       </div>
+      <ToastContainer/>
     </section>
   );
 }

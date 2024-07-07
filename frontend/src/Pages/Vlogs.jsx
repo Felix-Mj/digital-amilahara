@@ -10,6 +10,7 @@ import {
 import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import api from '../../api'
+import { PulseLoader } from "react-spinners";
 
 export default function Vlogs() {
   const [currentPage, setCurrentPage] = useState(1);
@@ -65,7 +66,9 @@ export default function Vlogs() {
               </Link>
             ))
           ) : (
-            <p>loding</p>
+            <div className="flex items-center justify-center h-screen">
+              <PulseLoader/>
+            </div>
           )}
         </div>
       </div>

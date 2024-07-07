@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from "react";
+
 import {
   Carousel,
   CarouselContent,
@@ -8,19 +9,23 @@ import {
 } from "@/components/ui/carousel";
 import { ChevronLeftIcon, ChevronRightIcon } from "lucide-react";
 import api from "../../../api";
+import { PulseLoader } from "react-spinners";
 
 export default function Slider() {
   const [slider, setSlider] = useState([])
+  const [loading, setLoading] = useState(true)
   useEffect(()=>{
+    setLoading(true)
     const fetchData = async ()=>{
       const res = await api.get('/api/v1/slider')
       setSlider(res.data.data)
     }
     fetchData()
+    setLoading(false)
   },[])
   return (
     <div className="w-full mx-auto">
-      <Carousel className=" overflow-hidden">
+      { loading == true ? <div className="flex items-center justify-center h-[400px]"><PulseLoader/></div>  :       <Carousel className=" overflow-hidden">
         <CarouselContent>
           {slider.map((e,i)=>{
             return(
@@ -54,6 +59,7 @@ export default function Slider() {
           <ChevronRightIcon className="w-6 h-6 text-gray-900 dark:text-gray-50" />
         </CarouselNext>
       </Carousel>
+      }
     </div>
   );
 }
