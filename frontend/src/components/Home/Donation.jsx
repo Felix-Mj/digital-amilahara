@@ -26,28 +26,28 @@ export default function Donation() {
     orderId: getCurrentDateTime(),
     customerName: currentUser?.name,
     customerEmail: currentUser?.email,
-    customerPhone: currentUser?.number,
+    customerPhone: String(currentUser?.number),
   });
 
   // Handle order amount change
   const handleOrderAmountChange = (e) => {
-    setUserData({ ...useData, [e.target.id]: e.target.value });
+    setUserData({ ...useData, [e.target.id]: Number(e.target.value) });
   };
-
+console.log(useData)
   // Handle the donation process
   const handleDonate = async () => {
     try {
-      if (!useData.customerEmail) {
+      if (!useData?.customerEmail) {
         toast.error("Please Login", {
           position: "top-right",
         });
         return;
-      } if (useData.customerPhone.length<=9) {
+      } if (useData?.customerPhone?.length<=9) {
         toast.error("Please update number",{
           position: "top-right",
         })
         return;
-      } if (!useData.orderAmount) {
+      } if (!useData?.orderAmount) {
         toast.error("Enter Amont",{
           position: "top-right",
         })
@@ -55,8 +55,7 @@ export default function Donation() {
       }
       else{
         const payment = await api.post("/api/v2/payment", useData);
-        window.location.href = payment.data.url;
-        console.log(payment.data.url);
+        window.location.href = payment?.data?.url;
       }
     } catch (error) {
       console.error("Error processing payment:", error);

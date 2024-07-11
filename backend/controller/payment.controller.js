@@ -5,6 +5,8 @@ dotenv.config();
 
 Cashfree.XClientId = process.env.CASHFREE_APP_ID;
 Cashfree.XClientSecret = process.env.CASHFREE_SECRET_KEY;
+Cashfree.Environment.PRODUCTION
+
 
 export const generatePaymentLink = async (req, res) => {
   try {
