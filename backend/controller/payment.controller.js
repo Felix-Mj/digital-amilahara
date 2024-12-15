@@ -99,7 +99,7 @@ export const PaymentSuccess = async (req, res) => {
 
 export const paymentHistory = async (req, res) => {
   try {
-    const Email = req.params.email;
+    const Email = req.params.id;
     const paymentHistory = await userPayment.find({ email:Email, orderId: "SUCCESS" });
     res.status(200).json({ success: true, message: "Payment History", data: paymentHistory });
   } catch (error) {
